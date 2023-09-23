@@ -100,7 +100,7 @@ Tabs.transcription.registerSetup(()=>{
         }
         self.onClicked = function (nucleotide) {
             mySolutions[self.index] = nucleotide
-            elementAt(self.index).children[1].innerText = nucleotide.charName
+            elementAt(self.index).children[0].innerText = nucleotide.charName
             this.moveRight()
         }
 
