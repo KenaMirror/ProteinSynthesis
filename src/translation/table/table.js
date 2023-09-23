@@ -112,6 +112,7 @@ Tabs.translation.registerSetup(() => {
             if (SETTINGS.nucleoTableSelectionEnabled && automatic) {
                 // updateBackground(true)
             }
+            // console.log("upd{"+automatic+"}{"+first+"}")
         }
 
         {
@@ -119,7 +120,7 @@ Tabs.translation.registerSetup(() => {
             if (SETTINGS.nucleoTableSelectionEnabled) {
                 onEachUpdate(disposable, updateBackground)
             }
-            onUIChanges(disposable, updateBackground)
+            onUIChanges(disposable, ()=>updateBackground(false))
         }
 
         function addName(div, nucleo) {

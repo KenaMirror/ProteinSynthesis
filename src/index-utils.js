@@ -38,12 +38,13 @@ const Mathf = {
 
 /**@returns Disposable*/
 function Disposable(condition) {
-    return {
+    class Disposable{
         /**@returns boolean*/
         isDisposed() {
             return condition()
         }
     }
+    return new Disposable()
 }
 
 const Disposer = function () {
@@ -66,7 +67,7 @@ const onEachUpdate = function () {
     return onEachUpdate
 
     /**
-     * @param disposable {{isDisposed():boolean}}
+     * @param disposable {Disposable}
      * @param callback {()=>void}
      * */
     function onEachUpdate(disposable, callback) {
