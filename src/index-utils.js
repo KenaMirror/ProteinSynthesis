@@ -35,6 +35,53 @@ const Mathf = {
         return array[this.randInt(0, array.length)]
     },
 }
+
+/**@returns Disposable*/
+function Disposable(condition) {
+    return {
+        /**@returns boolean*/
+        isDisposed() {
+            return condition()
+        }
+    }
+}
+
+const Disposer = function () {
+    let globalIteration = 0;
+    return {
+        reset() {
+            globalIteration++;
+        },
+        /**@returns Disposable*/
+        create() {
+            let myId = globalIteration + 1;
+            myId -= 1;
+            return new Disposable(() => globalIteration !== myId)
+        }
+    }
+}()
+
+
+const onEachUpdate = function () {
+    return onEachUpdate
+
+    /**
+     * @param disposable {{isDisposed():boolean}}
+     * @param callback {()=>void}
+     * */
+    function onEachUpdate(disposable, callback) {
+        let obj = () => {
+            if (disposable.isDisposed()) {
+                return
+            }
+            callback()
+            setTimeout(obj, 0)
+        }
+
+        setTimeout(obj, 0)
+    }
+}();
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

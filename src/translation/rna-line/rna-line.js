@@ -9,16 +9,9 @@ Tabs.translation.registerSetup(() => {
         rnaLineElement.style["--self-translate-y"] = "calc(50vh - " + (itemHeight / 2) + "px)"
         rnaLineElement.style.transform = "translate(var(--self-translate-x), var(--self-translate-y))"
         rnaLineElement.style.cssText=CssParser.stringify(rnaLineElement.style)
-        function checkUpdateScl(prevScale,prevWidth,prevHeight){
-            let scale=window.devicePixelRatio;
-            let width=window.innerWidth;
-            let height=window.innerHeight;
-            if(scale!==prevScale || width!==prevWidth || prevHeight!==height){
-                Tabs.translation.ribosome.grab(MAIN_WINDOW.innerWidth / 2, MAIN_WINDOW.innerHeight / 2, itemWidth)
-            }
-            setTimeout(()=>checkUpdateScl(scale,width,height))
-        }
-        checkUpdateScl(-1,-1,-1)
+        onUIChanges(Disposer.create(),()=>{
+            Tabs.translation.ribosome.grab(MAIN_WINDOW.innerWidth / 2, MAIN_WINDOW.innerHeight / 2, itemWidth)
+        })
 
         return {
             element: rnaLineElement,
@@ -46,7 +39,7 @@ Tabs.translation.registerSetup(() => {
                             rnaLineElement.style.transform="translate(var(--self-translate-x), var(--self-translate-y)) translateY(" + translateY+"px)"
                         },
                         complete(anim) {
-                            console.log(anim)
+                            // console.log(anim)
                             self.y -= itemHeight;
                             rnaLineElement.style.transform="translate(var(--self-translate-x), var(--self-translate-y)) translateY("+self.y+"px)"
                         }
