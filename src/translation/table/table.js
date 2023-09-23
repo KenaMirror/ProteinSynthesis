@@ -7,7 +7,7 @@ Tabs.translation.registerSetup(() => {
 
         let generateNextButton = createElement("button", ["class", "translation_generate_next hidden"], it => {
             it.innerHTML = BUNDLE["press-enter-to-generate-next"]
-            it.onclick=()=>{
+            it.onclick = () => {
                 gotoTab(Tabs.translation)
             }
         });
@@ -50,7 +50,7 @@ Tabs.translation.registerSetup(() => {
                     currentPosition[property] = -1
                 }
                 tableElement.dataset["current" + property] = "" + currentPosition[property]
-                updateBackground()
+                updateBackground(false)
             }
         }
 
@@ -63,62 +63,64 @@ Tabs.translation.registerSetup(() => {
             [[], [], [], []]
         ]
 
-        function updateBackground(automatic = false, first = false) {
-            function after() {
-                if (automatic && !first) {
-                    if (currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
-                        backgroundUpdates.cords[currentPosition.x][currentPosition.y][currentPosition.z]()
-                    }
-                } else {
-                    if (!automatic || first || currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
-
-                        let drawer = MAIN_WINDOW.backgroundDrawer;
-                        drawer.paneOutlineColor = "#454545"
-                        drawer.paneBackgroundColor = "rgba(0,0,0,0.4)"
-
-                        if (currentPosition.x > -1) {
-                            let rna = BIO.Nucleotide.rnaById(currentPosition.x);
-                            drawer.firstLayerColor = rna.colors[2]
-                            // tableElement.style.setProperty("--first-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
-                        }
-                        if (currentPosition.y > -1) {
-                            let rna = BIO.Nucleotide.rnaById(currentPosition.y);
-                            drawer.secondLayerColor = rna.colors[0]
-                            // tableElement.style.setProperty("--second-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
-                        }
-                        if (currentPosition.z > -1) {
-                            let rna = BIO.Nucleotide.rnaById(currentPosition.z);
-                            if (currentPosition.z === currentPosition.x) {
-                                drawer.thirdLayerColor = rna.colors[1]
-                            } else {
-                                drawer.thirdLayerColor = rna.colors[2]
-                            }
-                            // tableElement.style.setProperty("--third-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
-                        }
-                        if (automatic && !first) {
-                            for (let i = 0; i < backgroundUpdates.length; i++) {
-                                let update = backgroundUpdates[i];
-                                if (update.x === currentPosition.x && update.y === currentPosition.y && update.z === currentPosition.z) {
-                                    update()
-                                    break
-                                }
-                            }
-                        } else {
-                            for (let i = 0; i < backgroundUpdates.length; i++) {
-                                backgroundUpdates[i]()
-                            }
-                        }
-                    }
+        function updateBackground(automatic = true, first = false) {
+            if (automatic && !first) {
+                if (currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
+                    backgroundUpdates.cords[currentPosition.x][currentPosition.y][currentPosition.z]()
                 }
-                if (SETTINGS.nucleoTableSelectionEnabled && automatic) {
-                    updateBackground(true)
+            } else {
+                if (!automatic || first || currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
+
+                    let drawer = MAIN_WINDOW.backgroundDrawer;
+                    drawer.paneOutlineColor = "#454545"
+                    drawer.paneBackgroundColor = "rgba(0,0,0,0.4)"
+
+                    if (currentPosition.x > -1) {
+                        let rna = BIO.Nucleotide.rnaById(currentPosition.x);
+                        drawer.firstLayerColor = rna.colors[2]
+                        // tableElement.style.setProperty("--first-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
+                    }
+                    if (currentPosition.y > -1) {
+                        let rna = BIO.Nucleotide.rnaById(currentPosition.y);
+                        drawer.secondLayerColor = rna.colors[0]
+                        // tableElement.style.setProperty("--second-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
+                    }
+                    if (currentPosition.z > -1) {
+                        let rna = BIO.Nucleotide.rnaById(currentPosition.z);
+                        if (currentPosition.z === currentPosition.x) {
+                            drawer.thirdLayerColor = rna.colors[1]
+                        } else {
+                            drawer.thirdLayerColor = rna.colors[2]
+                        }
+                        // tableElement.style.setProperty("--third-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
+                    }
+                    if (automatic && !first) {
+                        for (let i = 0; i < backgroundUpdates.length; i++) {
+                            let update = backgroundUpdates[i];
+                            if (update.x === currentPosition.x && update.y === currentPosition.y && update.z === currentPosition.z) {
+                                update()
+                                break
+                            }
+                        }
+                    } else {
+                        for (let i = 0; i < backgroundUpdates.length; i++) {
+                            backgroundUpdates[i]()
+                        }
+                    }
                 }
             }
-
-            setTimeout(after, 0)
+            if (SETTINGS.nucleoTableSelectionEnabled && automatic) {
+                // updateBackground(true)
+            }
         }
 
-        onUIChanges(updateBackground)
+        {
+            let disposable = Disposer.create();
+            if (SETTINGS.nucleoTableSelectionEnabled) {
+                onEachUpdate(disposable, updateBackground)
+            }
+            onUIChanges(disposable, updateBackground)
+        }
 
         function addName(div, nucleo) {
             createDiv(div, "nucleotide-name").innerText = nucleo.name.charAt(0);
@@ -154,7 +156,7 @@ Tabs.translation.registerSetup(() => {
                     currentPosition.x = -1
                     currentPosition.z = -1
                 }
-                updateBackground()
+                updateBackground(false)
             });
             div.className += " translation-table-label"
             addName(div, xNuc)
@@ -194,7 +196,7 @@ Tabs.translation.registerSetup(() => {
                             }
                         }
                         invokeListeners()
-                        updateBackground()
+                        updateBackground(false)
                     })
                     let upd = () => {
                         // console.log("c",currentPosition,"pos",[x,y,z])
@@ -253,7 +255,7 @@ Tabs.translation.registerSetup(() => {
                         currentPosition.z = -1
                     }
                     tableElement.dataset.currentz = "" + currentPosition.z
-                    updateBackground()
+                    updateBackground(false)
                 })
 
             })
@@ -263,6 +265,7 @@ Tabs.translation.registerSetup(() => {
         })
         updateBackground(true, true)
         return {
+            tableElement: tableElement,
             deselect() {
                 currentPosition.x = currentPosition.y = currentPosition.z = -1
                 for (let i = 0; i < 4; i++) {
@@ -272,9 +275,9 @@ Tabs.translation.registerSetup(() => {
                         tableElement.children[6 + 5 + i * 6].children[j].dataset.pressed = "0";
                     }
                 }
-                updateBackground()
+                updateBackground(false)
             },
-            generateNextButton(){
+            generateNextButton() {
                 return generateNextButton;
             },
             addClickListener(listener) {

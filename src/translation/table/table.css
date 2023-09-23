@@ -18,6 +18,8 @@
     left: 0;
     grid-template-rows: auto;
     grid-template-columns: auto auto;
+    overflow: visible;
+    min-height: 100%;
 }
 
 .dna-line__buttons__nucleo > .nucleotide__item, .dna-line__gray__button {

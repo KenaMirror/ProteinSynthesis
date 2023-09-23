@@ -43,11 +43,12 @@ const Tabs = function () {
     function tab() {
         let setupMethods = []
 
-        return  {
+        return {
             registerSetup(runnable) {
                 setupMethods.push(runnable)
             },
             setup() {
+                Disposer.reset()
                 setupMethods.forEach(it => it())
                 postprocessors.forEach(it => it())
             }
@@ -157,10 +158,12 @@ function createDiv(parent, className, configuration = undefined) {
 }
 
 /**
+ * @param disposable {Disposable}
  * @param callback {()=>void}
  * */
-function onUIChanges(callback) {
+function onUIChanges(disposable, callback) {
     function checkUpdateScl(prevScale, prevWidth, prevHeight) {
+        if (disposable.isDisposed()) return
         let scale = window.devicePixelRatio;
         let width = window.innerWidth;
         let height = window.innerHeight;

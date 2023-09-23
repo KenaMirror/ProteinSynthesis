@@ -2,13 +2,11 @@
     <meta charset="UTF-8">
     <title>Protein Synthesis</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
-            integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="src/parsers/parsers.js"></script>
     <!--region bundles-->
-    <bundle lang="en"  href="resources/bundles/bundle.properties"></bundle>
+    <bundle lang="en" href="resources/bundles/bundle.properties"></bundle>
     <bundle lang="ru" href="resources/bundles/bundle_ru.properties"></bundle>
     <script src="src/bundles/bundles.js"></script>
     <!--endregion-->
@@ -48,22 +46,27 @@
     <!--endregion-->
     <script defer src="index.js"></script>
 </head>
-<body style="width: 100%;height: 100%;position: absolute"></body>
-<div class="element__container permanent" style="z-index: 1; width: 100%;height: 100%;position: absolute">
-    <div style="width: 100%"></div>
-    <div style="background: rgba(0,0,0,0.51); width: 14vw;height: 100%;
+<style>
+    .side-bar {
+        background: rgba(0, 0, 0, 0.51);
+        width: 14vw;
+        height: 100%;
         vertical-align: bottom;
         display: table;
-        overflow: hidden;">
+
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+</style>
+<body style="width: 100%;height: 100%;position: absolute">
+    <div class="side-bar" style="z-index: 1;">
         <div style="display: table-cell; vertical-align: middle;">
             <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
 
             </button>
-            <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)">
-            </button>
-            <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)">
-            </button>
+            <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)"></button>
+            <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)"></button>
         </div>
     </div>
-</div>
-</html>
+</body>

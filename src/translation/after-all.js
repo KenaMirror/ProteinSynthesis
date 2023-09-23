@@ -18,6 +18,18 @@ Tabs.translation.registerSetup(() => {
     }
 
     generateNew()
+    onUIChanges(Disposer.create(),()=>{
+        let table =
+            Tabs.translation.table;
+        let rnaLine = Tabs.
+            translation.rnaLine;
+        if (table.tableElement.scrollHeight > window.outerHeight) {
+            rnaLine.element.parentElement.style.height=table.tableElement.scrollHeight+"px"
+        } else{
+            rnaLine.element.parentElement.style.height=null
+        }
+
+    })
     Tabs.translation.table.addClickListener((x, y, z, acid) => {
         let current = list[Tabs.translation.aminoAcidField.index];
         // console.log("x,y,z",[x,y,z],current)
