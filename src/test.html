@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script defer src="custom/custom-buttons.js"></script>
+</head>
+<style>
+    .dna-nucleotide-background {
+        font-size: 22px;
+        top: 0;
+        left: 0;
+        background-color: attr(data-color color);
+        /*background-color: #eee;*/
+    }
+
+    /* On mouse-over, add a grey background color */
+    .dna-nucleotide-background:hover {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .dna-nucleotide-background[data-pressed="1"] {
+        background-color: #FFD37F;
+    }
+
+
+</style>
+<body>
+
+<h1>Custom Radio Buttons</h1>
+<span class="dna-nucleotide-background" data-pressed="0">One</span>
+<span class="dna-nucleotide-background" data-pressed="0">Two</span>
+<span class="dna-nucleotide-background" data-pressed="0">Three</span>
+<span class="dna-nucleotide-background" data-pressed="0">Four</span>
+
+</body>
+</html>

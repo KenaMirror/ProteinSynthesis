@@ -1,0 +1,55 @@
+
+
+.amino-acid-field {
+    transform: translate(50px,50px);
+
+    display:inline-flex;
+    height: 140px;
+    max-width:100%;
+}
+
+.amino-acid__container {
+    align-content: center;
+    display:inline;
+    width: 38px;
+    height: 38px;
+}
+.amino-acid {
+    display: flex;
+    border-radius: 50%;
+    align-content: center;
+    width: 76px;
+    height: 76px;
+    background: #b9912d;
+}
+
+.amino-acid__inner {
+    border-radius: 50%;
+    align-content: center;;
+
+    background: #d8ba15;
+    width: 64px;
+    height: 64px;
+    margin: auto;
+
+    text-align: center;
+    vertical-align: center;
+
+}
+
+.amino-acid__inner__text {
+
+    margin: auto;
+    text-align: center;
+    padding-top: 16px;
+    font-size: 20px;
+}
+
+.amino-acid-offset {
+    margin-top: 65px;
+}
+/*
+
+.amino-acid__container + amino-acid__transperent{
+
+}*/

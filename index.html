@@ -1,0 +1,69 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Protein Synthesis</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+            integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="src/parsers/parsers.js"></script>
+    <!--region bundles-->
+    <bundle lang="en"  href="resources/bundles/bundle.properties"></bundle>
+    <bundle lang="ru" href="resources/bundles/bundle_ru.properties"></bundle>
+    <script src="src/bundles/bundles.js"></script>
+    <!--endregion-->
+    <!--region common-->
+    <script src="src/index-utils.js"></script>
+    <script src="src/index-bio.js"></script>
+    <script src="src/index-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/index.css">
+    <link rel="stylesheet" type="text/css" href="src/custom/popup.css">
+    <!--endregion-->
+    <!--region settings-->
+    <script src="src/settings/settings.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/settings/settings.css">
+    <!--endregion-->
+    <!--region transcription-->
+
+    <link rel="stylesheet" type="text/css" href="src/transcription/dna-line/dna-line.css">
+    <script src="src/transcription/dna-line/dna-line.js"></script>
+    <!--endregion-->
+    <!--region translation-->
+
+    <script src="src/translation/from-kotlin/draw-background.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/translation/ribosome/ribosome.css">
+    <script src="src/translation/ribosome/ribosome.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/translation/amino-acid/amino-acid.css">
+    <script src="src/translation/amino-acid/amino-acid.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/translation/rna-line/rna-line.css">
+    <script src="src/translation/rna-line/rna-line.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="src/translation/table/table.css">
+    <script src="src/translation/table/table.js"></script>
+    <!--endregion-->
+    <script defer src="src/custom/custom-buttons.js"></script>
+    <!--region after all-->
+    <script defer src="src/transcription/after-all.js"></script>
+    <script defer src="src/translation/after-all.js"></script>
+    <!--endregion-->
+    <script defer src="index.js"></script>
+</head>
+<body style="width: 100%;height: 100%;position: absolute"></body>
+<div class="element__container permanent" style="z-index: 1; width: 100%;height: 100%;position: absolute">
+    <div style="width: 100%"></div>
+    <div style="background: rgba(0,0,0,0.51); width: 14vw;height: 100%;
+        vertical-align: bottom;
+        display: table;
+        overflow: hidden;">
+        <div style="display: table-cell; vertical-align: middle;">
+            <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
+
+            </button>
+            <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)">
+            </button>
+            <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)">
+            </button>
+        </div>
+    </div>
+</div>
+</html>
