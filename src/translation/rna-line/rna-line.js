@@ -7,8 +7,8 @@ Tabs.translation.registerSetup(() => {
         // UI.translation.ribosome.fastPoint(window.innerWidth/2, window.innerHeight/2)
         rnaLineElement.style["--self-translate-x"] = "calc(50vw - " +(itemWidth / 2) + "px)"
         rnaLineElement.style["--self-translate-y"] = "calc(50vh - " + (itemHeight / 2) + "px)"
-        rnaLineElement.style.transform = "translate(var(--self-translate-x), var(--self-translate-y))"
         rnaLineElement.style.cssText=CssParser.stringify(rnaLineElement.style)
+        rnaLineElement.style.transform = "translate(var(--self-translate-x), var(--self-translate-y))"
         onUIChanges(Disposer.create(),()=>{
             Tabs.translation.ribosome.grab(MAIN_WINDOW.innerWidth / 2, MAIN_WINDOW.innerHeight / 2, itemWidth)
         })
