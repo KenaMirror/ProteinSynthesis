@@ -1,13 +1,14 @@
 const Time = function () {
     let startMillis = new Date().getTime();
-    /**@type Time*/
-    let Time = {
-        delta: 0,
-        time: 0,
-        fromMillis(millis) {
+
+    class Time {
+        static delta = 1
+        static time = 1
+
+        static fromMillis(millis) {
             return millis * 60 / 1000
         }
-    };
+    }
 
     function update() {
         let currentMillis = new Date().getTime();
@@ -23,27 +24,30 @@ const Time = function () {
 }()
 var MAIN_WINDOW = window
 var MAIN_ELEMENT = document.children[0]
-/** @type Mathf*/
-const Mathf = {
-    clamp(value) {
+
+class Mathf {
+    static clamp(value) {
         return Math.max(0, Math.min(1, value))
-    },
-    randInt(min, max) {
+    }
+
+    static randInt(min, max) {
         return Math.min(max - min, Math.floor(Math.random() * (max - min))) + min;
-    },
-    randomElement(array) {
+    }
+
+    static randomElement(array) {
         return array[this.randInt(0, array.length)]
-    },
+    }
 }
 
 /**@returns Disposable*/
 function Disposable(condition) {
-    class Disposable{
+    class Disposable {
         /**@returns boolean*/
         isDisposed() {
             return condition()
         }
     }
+
     return new Disposable()
 }
 
