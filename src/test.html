@@ -1,36 +1,64 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <script defer src="custom/custom-buttons.js"></script>
-</head>
-<style>
-    .dna-nucleotide-background {
-        font-size: 22px;
-        top: 0;
-        left: 0;
-        background-color: attr(data-color color);
-        /*background-color: #eee;*/
-    }
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Модальное окно</title>
+        <style>
+            body {
+                text-align: center;
+                padding: 50px;
+            }
 
-    /* On mouse-over, add a grey background color */
-    .dna-nucleotide-background:hover {
-        background-color: #ccc;
-    }
+            #myModal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.4);
+            }
 
-    /* When the radio button is checked, add a blue background */
-    .dna-nucleotide-background[data-pressed="1"] {
-        background-color: #FFD37F;
-    }
+            #modalContent {
+                background-color: #fefefe;
+                margin: 10% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
 
+            button {
+                font-size: 16px;
+                padding: 10px 20px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
 
-</style>
-<body>
+        <button onclick="openModal()">Открыть модальное окно</button>
 
-<h1>Custom Radio Buttons</h1>
-<span class="dna-nucleotide-background" data-pressed="0">One</span>
-<span class="dna-nucleotide-background" data-pressed="0">Two</span>
-<span class="dna-nucleotide-background" data-pressed="0">Three</span>
-<span class="dna-nucleotide-background" data-pressed="0">Four</span>
+        <div id="myModal">
+            <div id="modalContent">
+                <span onclick="closeModal()" style="float: right; cursor: pointer;">&times;</span>
+                <h2>Модальное окно</h2>
+                <p>Это ваше модальное окно с контентом.</p>
+                <button onclick="closeModal()">Закрыть окно</button>
+            </div>
+        </div>
 
-</body>
+        <script>
+            function openModal() {
+                document.getElementById('myModal').style.display = 'block';
+            }
+
+            function closeModal() {
+                document.getElementById('myModal').style.display = 'none';
+            }
+        </script>
+
+    </body>
 </html>

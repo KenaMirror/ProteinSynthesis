@@ -49,6 +49,7 @@ const Tabs = function () {
             },
             setup() {
                 Disposer.reset()
+                document.querySelector("#modalButton").style.display="none"
                 setupMethods.forEach(it => it())
                 postprocessors.forEach(it => it())
             }
