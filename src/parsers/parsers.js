@@ -9,7 +9,10 @@ const PropertiesParser = {
             if (index === -1) throw new Error("Error while parsing properties at line " + (i + 1) + " line text '" + line + "'")
             let key = line.substring(0, index).trim();
             let value = line.substring(index + 1).trimStart()
-            obj[key] = value;
+            obj[key] =value
+                .replaceAll("\\\\n","\u0000")
+                .replaceAll("\\n","\n")
+                .replaceAll('\u0000',"\\\\n");
         }
         return obj
     }

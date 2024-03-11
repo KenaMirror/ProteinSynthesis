@@ -3,7 +3,9 @@
     <title>Protein Synthesis</title>
     <link rel="icon" type="image/svg+xml" href="resources/icon.svg">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+            integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="src/parsers/parsers.js"></script>
     <!--region bundles-->
@@ -17,6 +19,7 @@
     <script src="src/index-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="src/index.css">
     <link rel="stylesheet" type="text/css" href="src/custom/popup.css">
+    <link rel="stylesheet" type="text/css" href="src/custom/modal.css">
     <!--endregion-->
     <!--region settings-->
     <script src="src/settings/settings.js"></script>
@@ -40,9 +43,11 @@
     <script src="src/translation/table/table.js"></script>
     <!--endregion-->
     <script defer src="src/custom/custom-buttons.js"></script>
+<!--    <script defer src="src/custom/modal.js"></script>-->
     <!--region after all-->
     <script defer src="src/transcription/after-all.js"></script>
     <script defer src="src/translation/after-all.js"></script>
+    <script defer src="src/setup-modal.js"></script>
     <!--endregion-->
     <script defer src="index.js"></script>
 </head>
@@ -60,6 +65,42 @@
     }
 </style>
 <body style="width: 100%;height: 100%;position: absolute">
+
+    <button id="modalButton" onclick="openModal()" style="display: none">
+        <img id="idle" src="resources/svg/info-1.svg" alt="Info" width="48">
+        <img id="hover" src="resources/svg/info-3.svg" alt="Info" width="48">
+        <img id="active" src="resources/svg/info-2.svg" alt="Info" width="48">
+    </button>
+
+    <div id="myModal">
+        <div id="modalContent">
+            <img onclick="closeModal()" style="float:right; cursor: pointer;" src="resources/svg/close.svg" width="32"
+                 height="32" alt="Close">
+            <h2 style="font-size: calc(var(--font-size) + 10px);">Информация</h2>
+            <p style="font-size: calc(var(--font-size) );" id="text_target"></p>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            let button = document.querySelector("#modalButton");
+            let sideBar=document.querySelector(".side-bar")
+            console.log("load")
+            function updatePadding() {
+                button.style.right=sideBar.clientWidth+"px"
+                setTimeout(updatePadding)
+            }
+            updatePadding()
+        })
+
+        function openModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+    </script>
     <div class="side-bar" style="z-index: 1;">
         <div style="display: table-cell; vertical-align: middle;">
             <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
@@ -69,4 +110,5 @@
             <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)"></button>
         </div>
     </div>
+
 </body>
