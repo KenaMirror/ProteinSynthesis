@@ -1,0 +1,87 @@
+
+:root {
+    --tmp-first-color: var(--adenine-main-color);
+    --tmp-second-color: var(--guanine-sub-color);
+    --tmp-third-color: var(--cytosine-main-color);
+
+}
+
+.translation-table-acid-container {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 4px solid #454545;
+}
+
+.translation-table__acid-field__wrap {
+    display: flex;
+    padding: 4px;
+    /*justify-content: center; !* Center horizontally *!*/
+    /*align-items: center; !* Center vertically *!*/
+    flex-direction: column;
+    /*border-color: #67da65;*/
+    border-width: 0;
+    justify-items: center;
+    border-style: none solid none solid;
+    /*border-right-style: solid;*/
+}
+
+.translation-table__acid-field__wrap > div {
+    flex: 1;
+    width: 100%;
+}
+
+.translation-table__acid-field__wrap:first-child {
+    border-top-style: solid;
+    padding-bottom: 8px;
+}
+
+.translation-table__acid-field__wrap:last-child {
+    border-bottom-style: solid;
+    padding-top: 8px;
+
+}
+
+.translation-table__acid-field__horiz_big > :not(.translation-table__acid-field__horiz_small):not(.translation-table__acid-field__vert) {
+    background-color: var(--tmp-first-color);
+}
+
+.translation-table__acid-field__horiz_big > .translation-table__acid-field__vert {
+    border-width: 4px;
+    border-color: var(--tmp-first-color);
+    background-color: var(--tmp-second-color);
+}
+
+.translation-table__acid-field__horiz_small:not(.translation-table__acid-field__vert) {
+    border-style: solid none solid none;
+}
+
+.translation-table__left__sided > .translation-table__acid-field__horiz_small:not(.translation-table__acid-field__vert) {
+    border-left-style: solid;
+    padding-right: 8px;
+}
+
+.translation-table__right__sided > .translation-table__acid-field__horiz_small:not(.translation-table__acid-field__vert) {
+    border-right-style: solid;
+    padding-left: 8px;
+}
+
+.translation-table__acid-field__horiz_big > .translation-table__acid-field__horiz_small:not(.translation-table__acid-field__vert) {
+    border-width: 4px;
+    border-color: var(--tmp-first-color);
+    background-color: var(--tmp-third-color);
+}
+
+.translation-table__acid-field__horiz_big > .translation-table__acid-field__vert.translation-table__acid-field__horiz_small {
+    /*padding-top: 8px;*/
+}
+
+.translation-table__acid-field__horiz_big > .translation-table__acid-field__vert.translation-table__acid-field__horiz_small > div {
+    background: var(--tmp-third-color);
+}
+
+.translation-table__acid-field__vert:not(.translation-table__acid-field__horiz_big .translation-table__acid-field__vert) {
+    background-color: var(--tmp-second-color);
+}
+
+.translation-table__acid-field__wrap:not(.translation-table__acid-field__vert):not(.translation-table__acid-field__horiz_small) {
+    padding: 8px;
+}

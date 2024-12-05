@@ -23,19 +23,6 @@ Tabs.translation.registerSetup(() => {
             }
         }
 
-        function drawBackground(
-            elm /*HTMLCanvasElement*/,
-            posx /*nu*/,
-            posy /*Int*/,
-            posz /*Int*/,
-            firstLayerIndex /*Int*/,
-            secondLayerIndex /*Int*/,
-            thirdLayerIndex /*Int*/,
-            selection /*Boolean*/,
-            time /*Float*/,) {
-            MAIN_WINDOW.backgroundDrawer.draw(elm, posx, posy, posz, firstLayerIndex, secondLayerIndex, thirdLayerIndex, selection, time)
-        }
-
         let myControlButtons = {x: [[]], y: [[]], z: [[], [], [], []]}
 
         function listener(property, self, idxMapper) {
@@ -62,6 +49,8 @@ Tabs.translation.registerSetup(() => {
             [[], [], [], []],
             [[], [], [], []]
         ]
+        /**@type HTMLDivElement[][]*/
+        backgroundUpdates.wraps = [[], [], [], []]
 
         function updateBackground(automatic = true, first = false) {
             if (automatic && !first) {
@@ -71,41 +60,33 @@ Tabs.translation.registerSetup(() => {
             } else {
                 if (!automatic || first || currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
 
-                    let drawer = MAIN_WINDOW.backgroundDrawer;
-                    drawer.paneOutlineColor = "#454545"
-                    drawer.paneBackgroundColor = "rgba(0,0,0,0.4)"
 
                     if (currentPosition.x > -1) {
                         let rna = BIO.Nucleotide.rnaById(currentPosition.x);
-                        drawer.firstLayerColor = rna.colors[2]
-                        // tableElement.style.setProperty("--first-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
+                        tableElement.style.setProperty("--tmp-first-color", rna.colors[2]);
                     }
                     if (currentPosition.y > -1) {
                         let rna = BIO.Nucleotide.rnaById(currentPosition.y);
-                        drawer.secondLayerColor = rna.colors[0]
-                        // tableElement.style.setProperty("--second-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
+                        tableElement.style.setProperty("--tmp-second-color", rna.colors[0]);
                     }
                     if (currentPosition.z > -1) {
                         let rna = BIO.Nucleotide.rnaById(currentPosition.z);
                         if (currentPosition.z === currentPosition.x) {
-                            drawer.thirdLayerColor = rna.colors[1]
+                            tableElement.style.setProperty("--tmp-third-color", rna.colors[1]);
                         } else {
-                            drawer.thirdLayerColor = rna.colors[2]
+                            tableElement.style.setProperty("--tmp-third-color", rna.colors[2]);
                         }
-                        // tableElement.style.setProperty("--third-layer-color", `--${rna.enumName.toLowerCase()}-sub-color`)
                     }
-                    if (automatic && !first) {
-                        for (let i = 0; i < backgroundUpdates.length; i++) {
-                            let update = backgroundUpdates[i];
-                            if (update.x === currentPosition.x && update.y === currentPosition.y && update.z === currentPosition.z) {
-                                update()
-                                break
-                            }
+                    for (let i = 0; i < backgroundUpdates.wraps.length; i++) {
+                        let divs = backgroundUpdates.wraps[i];
+                        let className = "translation-table__acid-field__horiz_big";
+                        let force = i === currentPosition.x;
+                        for (let div of divs) {
+                            div.classList.toggle(className, force)
                         }
-                    } else {
-                        for (let i = 0; i < backgroundUpdates.length; i++) {
-                            backgroundUpdates[i]()
-                        }
+                    }
+                    for (let i = 0; i < backgroundUpdates.length; i++) {
+                        backgroundUpdates[i]()
                     }
                 }
             }
@@ -120,7 +101,7 @@ Tabs.translation.registerSetup(() => {
             if (SETTINGS.nucleoTableSelectionEnabled) {
                 onEachUpdate(disposable, updateBackground)
             }
-            onUIChanges(disposable, ()=>updateBackground(false))
+            onUIChanges(disposable, () => updateBackground(false))
         }
 
         function addName(div, nucleo) {
@@ -128,6 +109,8 @@ Tabs.translation.registerSetup(() => {
             div.addEventListener("click", updateBackground)
         }
 
+
+        //region Second layer
         BIO.Nucleotide.rna.forEach((it, idx) => {
             let div = makeCheckedButton(nucleotideDiv(tableElement, it));
             div.className += " translation-table-label"
@@ -139,6 +122,7 @@ Tabs.translation.registerSetup(() => {
             // div.style.height = "32px"
 
         })
+        //endregion
         createDiv(tableElement, "")
         BIO.Nucleotide.rna.forEach((xNuc) => {
             let div = makeCheckedButton(nucleotideDiv(tableElement, xNuc), () => {
@@ -165,24 +149,20 @@ Tabs.translation.registerSetup(() => {
 
             // div.addEventListener("click", )
             // div.addEventListener("click", listener("x", xNuc.id, (i) => 6 + i * 6))
-
             BIO.Nucleotide.rna.forEach((yNuc) => {
+                /**@type HTMLDivElement*/
                 let div = createDiv(tableElement, "translation-table-acid-container");
+                backgroundUpdates.wraps[xNuc.id][yNuc.id] = div;
+                if (yNuc.id === 0) div.classList.add("translation-table__left__sided")
+                if (yNuc.id === 3) div.classList.add("translation-table__right__sided")
                 for (let z = 0; z < 4; z++) {
                     let matrix = BIO.AminoAcid.matrix[xNuc.id][yNuc.id][z];
+                    /**@type HTMLDivElement*/
                     let wrap = create(div, "translation-table__acid-field__wrap", "div");
-                    createDiv(wrap, "translation-table__acid-field__wrap-text").innerText = matrix.title
-                    let canvas = create(wrap, "translation-table__acid-field__canvas", "canvas");
-                    canvas.width = 8
-                    canvas.height = 8
-                    // canvas.width = 128
-                    // canvas.height = 48
-                    setTimeout(() => {
-                        // canvas.style.width="var(--translation-table__acid-field__canvas-width)"
-                        // canvas.style.height="var(--translation-table__acid-field__canvas-height)"
-                    })
-                    // let wrap1 = createDiv(canvas, "translation-table__acid-field__wrap-1");
-                    // let wrap2 = createDiv(wrap1, "translation-table__acid-field__wrap-2");
+                    createDiv(
+                        createDiv(wrap, "translation-table__acid-field__wrap-text")
+                        , "translation-table__acid-field__wrap__wrap-text")
+                        .innerText = matrix.title
                     let y = yNuc.id;
                     let x = xNuc.id;
                     wrap.addEventListener("click", () => {
@@ -200,23 +180,8 @@ Tabs.translation.registerSetup(() => {
                         updateBackground(false)
                     })
                     let upd = () => {
-                        // console.log("c",currentPosition,"pos",[x,y,z])
-                        let parentElement = canvas.parentElement.getBoundingClientRect();
-                        let bounds = parentElement//.getBoundingClientRect();
-                        let calculatedHeight = parentElement.height;
-                        let calculatedWidth = parentElement.width;
-                        if ((((bounds.x + calculatedWidth) % 1) >= 0.5) && (bounds.x % 1) < 0.5) calculatedWidth++
-                        if ((((bounds.y + calculatedHeight) % 1) >= 0.5) && (bounds.y % 1) < 0.5) {
-                            calculatedHeight++
-                        }
-                        if (calculatedWidth !== canvas.width || calculatedHeight !== canvas.height) {
-                            let newCanvas = create(wrap, "translation-table__acid-field__canvas", "canvas");
-                            newCanvas.width = calculatedWidth;
-                            newCanvas.height = calculatedHeight;
-                            canvas.remove()
-                            canvas = newCanvas
-                        }
-                        drawBackground(canvas, currentPosition.x, currentPosition.y, currentPosition.z, x, y, z, SETTINGS.nucleoTableSelectionEnabled, Time.time)
+                        wrap.classList.toggle("translation-table__acid-field__vert", currentPosition.y === y)
+                        if (x === currentPosition.x) wrap.classList.toggle("translation-table__acid-field__horiz_small", currentPosition.z === z)
                     }
                     upd.x = x
                     upd.y = y

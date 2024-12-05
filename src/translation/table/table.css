@@ -91,9 +91,13 @@
 }
 
 .translation-table__acid-field__wrap-text {
-    margin: auto;
+    display: flex;
     /*position: absolute;*/
     z-index: 1;
+}
+
+.translation-table__acid-field__wrap__wrap-text{
+    margin: auto;
 }
 
 .translation-table__acid-field__canvas {
