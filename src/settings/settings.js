@@ -48,6 +48,7 @@ const SETTINGS = (function () {
     let settings = Settings()
 
 
+    /**@return string*/
     function getSetting(key) {
         // return JSON.parse(window.localStorage.getItem(key))
         return window.localStorage[key]
@@ -78,7 +79,24 @@ const SETTINGS = (function () {
                 }
             },
             get() {
-                return getSetting(this.name)
+                let value = getSetting(this.name);
+                switch (typeof def) {
+                    case "string":
+                    case "undefined":
+                    case "function":
+                    default:
+                        return value
+                    case "object":
+                        return JSON.parse(value)
+                    case "boolean":
+                        return value==="true"
+                    case "number":
+                        return Number.parseFloat(value)
+                    case "symbol":
+                        return Symbol(value);
+                    case "bigint":
+                        return BigInt(value)
+                }
             },
             set(value) {
                 setSetting(this.name, value)
