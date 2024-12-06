@@ -101,10 +101,14 @@
                                     } else {
                                         myAnimations = []
                                     }
+                                    for (let i = 0; i < myListeners.length; i++) {
+                                        myListeners[i](x,y)
+                                    }
                                     // console.log("target: ",[x,y])
                                     // console.log(self.element.style.transform)
                                     // console.log(anim)
                                 },
+
                                 update: function (anim) {
                                     let x=parseInt(anim.animations[0].currentValue.slice(0,-2))+ self.anchorX
                                     let y=parseInt(anim.animations[1].currentValue.slice(0,-2))+ self.anchorY
