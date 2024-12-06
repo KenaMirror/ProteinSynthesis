@@ -52,6 +52,20 @@ Tabs.translation.registerSetup(() => {
         /**@type HTMLDivElement[][]*/
         backgroundUpdates.wraps = [[], [], [], []]
 
+        /**
+         * @param {number} radians
+         * @param {number} scl
+         * @param {number} mag
+         */
+        function main$draw$sin(radians, scl, mag) {
+            return Math.sin(radians / scl) * mag;
+        }
+
+        /**@param time {number}*/
+        function mySin(time) {
+            return Math.max(0.0, main$draw$sin(time, 16.0, 1.0)) * 0.9 + 0.1;
+        }
+
         function updateBackground(automatic = true, first = false) {
             if (automatic && !first) {
                 if (currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
@@ -90,8 +104,22 @@ Tabs.translation.registerSetup(() => {
                     }
                 }
             }
-            if (SETTINGS.nucleoTableSelectionEnabled && automatic) {
+            let style=tableElement.style
+            if (SETTINGS.nucleoTableSelectionEnabled) {
+                let pi = Math.PI;
+                let delta = 8 * pi;
+                let time=Time.time
+                let alphaFirst = mySin(time);
+                let alphaSecond = mySin(time - delta);
+                let alphaThird = mySin(time - 2 * delta);
+                style.setProperty("--anim-accent-1", 'rgba(255, 211, 127, ' + alphaFirst + ')');
+                style.setProperty("--anim-accent-2", 'rgba(255, 211, 127, ' + alphaSecond + ')');
+                style.setProperty("--anim-accent-3", 'rgba(255, 211, 127, ' + alphaThird + ')');
                 // updateBackground(true)
+            } else {
+                style.setProperty("--anim-accent-1", '#00000000');
+                style.setProperty("--anim-accent-2", '#00000000');
+                style.setProperty("--anim-accent-3", '#00000000');
             }
             // console.log("upd{"+automatic+"}{"+first+"}")
         }
@@ -159,6 +187,7 @@ Tabs.translation.registerSetup(() => {
                     let matrix = BIO.AminoAcid.matrix[xNuc.id][yNuc.id][z];
                     /**@type HTMLDivElement*/
                     let wrap = create(div, "translation-table__acid-field__wrap", "div");
+                    createDiv(createDiv(wrap, "translation-table__acid-field__wrap-selector"), "translation-table__acid-field__wrap-selector__sub")
                     createDiv(
                         createDiv(wrap, "translation-table__acid-field__wrap-text")
                         , "translation-table__acid-field__wrap__wrap-text")
