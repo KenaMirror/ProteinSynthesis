@@ -87,6 +87,17 @@ const onEachUpdate = function () {
     }
 }();
 
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+setTimeout(()=>{
+    let disposable = Disposable(()=>false);
+    onUIChanges(disposable,()=>{
+        document.body.parentElement.classList.toggle("is-mobile",isMobileDevice())
+    })
+
+})
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
