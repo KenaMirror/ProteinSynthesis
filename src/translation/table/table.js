@@ -1,7 +1,7 @@
 Tabs.translation.registerSetup(() => {
     Tabs.translation.table = function () {
-        let container = createContainer();
-        container.classList.add("translation-table_container")
+        let container = createDiv(createContainer(),"translation-table_container");
+
 
         let tableElement = createDiv(container, "translation-table");
 
@@ -67,12 +67,13 @@ Tabs.translation.registerSetup(() => {
         }
 
         function updateBackground(automatic = true, first = false) {
+            let hasSelection = currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1;
             if (automatic && !first) {
-                if (currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
+                if (hasSelection) {
                     backgroundUpdates.cords[currentPosition.x][currentPosition.y][currentPosition.z]()
                 }
             } else {
-                if (!automatic || first || currentPosition.x !== -1 && currentPosition.y !== -1 && currentPosition.z !== -1) {
+                if (!automatic || first || hasSelection) {
 
 
                     if (currentPosition.x > -1) {
@@ -105,7 +106,7 @@ Tabs.translation.registerSetup(() => {
                 }
             }
             let style=tableElement.style
-            if (SETTINGS.nucleoTableSelectionEnabled) {
+            if (SETTINGS.nucleoTableSelectionEnabled && hasSelection) {
                 let pi = Math.PI;
                 let delta = 8 * pi;
                 let time=Time.time
