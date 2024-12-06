@@ -73,33 +73,29 @@ const SETTINGS = (function () {
                 this.set(def)
             },
             check() {
-                let setting = getSetting(this.name);
-                if (listener && setting !== undefined && setting !== def) {
+                let setting = this.get();
+                if (listener && setting !== def) {
                     listener(setting)
                 }
             },
             get() {
                 let value = getSetting(this.name);
-                switch (typeof def) {
-                    case "string":
-                    case "undefined":
-                    case "function":
-                    default:
-                        return value
-                    case "object":
-                        return JSON.parse(value)
-                    case "boolean":
-                        return value==="true"
-                    case "number":
-                        return Number.parseFloat(value)
-                    case "symbol":
-                        return Symbol(value);
-                    case "bigint":
-                        return BigInt(value)
+                if (value === undefined) return def
+                try {
+                    let value1 = JSON.parse(value).value;
+
+                    if (typeof value1 !== typeof def) {
+                        window.localStorage.removeItem(this.name)
+                        return def;
+                    }
+                    return value1
+                } catch (e) {
+                    window.localStorage.removeItem(this.name)
+                    return def;
                 }
             },
             set(value) {
-                setSetting(this.name, value)
+                setSetting(this.name,JSON.stringify( {value: value}))
                 if (listener) {
                     listener(value)
                 }
