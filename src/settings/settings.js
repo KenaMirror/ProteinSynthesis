@@ -34,7 +34,7 @@ const SETTINGS = (function () {
             coloredNucleoTableCross: SettingKey(true),
             nucleoTableSelectionEnabled: SettingKey(true),
             coloredNucleoLine: SettingKey(true),
-            backgroundColor: SettingKey("#32472c", newcolor => {
+            backgroundColor: SettingKey("#9cb295", newcolor => {
                 setTimeout(() => {
                     let style = document.body.style;
                     style.backgroundColor = newcolor
