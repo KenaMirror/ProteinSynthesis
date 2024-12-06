@@ -49,19 +49,12 @@
     <script defer src="src/setup-modal.js"></script>
     <!--endregion-->
     <script defer src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/sidebar/sidebar.css">
+    <script src="src/sidebar/sidebar.js"></script>
+
 </head>
 <style>
-    .side-bar {
-        background: rgba(0, 0, 0, 0.51);
-        width: 14vw;
-        height: 100%;
-        vertical-align: bottom;
-        display: table;
 
-        position: fixed;
-        top: 0;
-        right: 0;
-    }
 </style>
 <body style="width: 100%;height: 100%;position: absolute">
 
@@ -100,11 +93,9 @@
             document.getElementById('myModal').style.display = 'none';
         }
     </script>
-    <div class="side-bar" style="z-index: 1;">
+    <div class="side-bar" >
         <div style="display: table-cell; vertical-align: middle;">
-            <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
-
-            </button>
+            <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)"></button>
             <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)"></button>
             <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)"></button>
         </div>
