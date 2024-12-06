@@ -3,14 +3,17 @@ Tabs.translation.registerSetup(() => {
         const itemWidth = 44;
         const itemHeight = 100 + 8;
         let container = createContainer();
-        let rnaLineElement = createDiv(container, "rna-line");
+        let rnaLineContainer = createDiv(container, "rna-line-container");
+        let rnaLineElement = createDiv(rnaLineContainer, "rna-line");
         // UI.translation.ribosome.fastPoint(window.innerWidth/2, window.innerHeight/2)
-        rnaLineElement.style["--self-translate-x"] = "calc(50vw - " +(itemWidth / 2) + "px)"
-        rnaLineElement.style["--self-translate-y"] = "calc(50vh - " + (itemHeight / 2) + "px)"
-        rnaLineElement.style.cssText=CssParser.stringify(rnaLineElement.style)
-        rnaLineElement.style.transform = "translate(var(--self-translate-x), var(--self-translate-y))"
-        onUIChanges(Disposer.create(),()=>{
-            Tabs.translation.ribosome.grab(MAIN_WINDOW.innerWidth / 2, MAIN_WINDOW.innerHeight / 2, itemWidth)
+
+        rnaLineElement.style.cssText = CssParser.stringify(rnaLineElement.style)
+        setTimeout(()=>{
+            onUIChanges(Disposer.create(), () => {
+                let rect = rnaLineContainer.getBoundingClientRect();
+                let elementRect = rnaLineElement.getBoundingClientRect();
+                Tabs.translation.ribosome.grab(rect.x + rect.width / 2, rect.y + rect.height / 2, elementRect.width)
+            })
         })
 
         return {
@@ -34,14 +37,14 @@ Tabs.translation.registerSetup(() => {
                         easing: easing,
                         duration: duration,
                         // translateY: self.y - itemHeight,
-                        update(anim){
+                        update(anim) {
                             let translateY = self.y - itemHeight * anim.progress / 100;
-                            rnaLineElement.style.transform="translate(var(--self-translate-x), var(--self-translate-y)) translateY(" + translateY+"px)"
+                            rnaLineElement.style.transform = "translateY(" + translateY + "px)"
                         },
                         complete(anim) {
                             // console.log(anim)
                             self.y -= itemHeight;
-                            rnaLineElement.style.transform="translate(var(--self-translate-x), var(--self-translate-y)) translateY("+self.y+"px)"
+                            rnaLineElement.style.transform = "translateY(" + self.y + "px)"
                         }
                     })
                     rnaLineElement.children[this.index].className = 'rna-line__item'
