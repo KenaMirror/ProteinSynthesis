@@ -1,13 +1,11 @@
 Tabs.transcription.registerSetup(()=>{
     (function (){
 
-        let list = []
-        for (let i = 0; i < 10 * 3; i++) {
-            list.push(undefined)
-        }
         function generateNext(){
-            for (let i = 0; i < list.length; i++) {
-                list[i]=Mathf.randomElement(BIO.Nucleotide.dna)
+            let list = []
+            let TIRPLET_AMOUNT = Math.floor(window.innerWidth/2/16/4);
+            for (let i = 0; i < TIRPLET_AMOUNT * 3; i++) {
+                list.push(Mathf.randomElement(BIO.Nucleotide.dna))
             }
             Tabs.transcription.dnaLine.setup(list)
         }
