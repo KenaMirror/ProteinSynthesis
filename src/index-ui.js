@@ -153,6 +153,7 @@ function makeCheckedButton(element, listener = undefined) {
  * @param parent {HTMLElement}
  * @param className {string}
  * @param configuration {((HTMLElement)=>void)?}
+ * @return HTMLDivElement
  * */
 function createDiv(parent, className, configuration = undefined) {
     return create(parent, className, "div", configuration)
