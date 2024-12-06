@@ -31,12 +31,12 @@
 
 .translation-table__acid-field__wrap:first-child {
     border-top-style: solid;
-    padding-bottom: 8px;
+    /*padding-bottom: 8px;*/
 }
 
 .translation-table__acid-field__wrap:last-child {
     border-bottom-style: solid;
-    padding-top: 8px;
+    /*padding-top: 8px;*/
 
 }
 
@@ -74,7 +74,7 @@
     /*padding-top: 8px;*/
 }
 
-.translation-table__acid-field__horiz_big > .translation-table__acid-field__vert.translation-table__acid-field__horiz_small > div {
+.translation-table__acid-field__horiz_big > .translation-table__acid-field__vert.translation-table__acid-field__horiz_small > .translation-table__acid-field__wrap-text {
     background: var(--tmp-third-color);
 }
 
@@ -84,4 +84,52 @@
 
 .translation-table__acid-field__wrap:not(.translation-table__acid-field__vert):not(.translation-table__acid-field__horiz_small) {
     padding: 8px;
+}
+
+.translation-table__acid-field__wrap-selector {
+    display: none;
+}
+
+.translation-table__acid-field__wrap {
+    position: relative;
+}
+
+.translation-table__acid-field__horiz_big > .translation-table__acid-field__vert.translation-table__acid-field__horiz_small > .translation-table__acid-field__wrap-selector {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    box-sizing:content-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 2;
+}
+
+:root {
+    --anim-accent-1: red;
+    --anim-accent-2: green;
+    --anim-accent-3: blue;
+}
+
+.translation-table__acid-field__wrap-selector {
+    /*padding: 4px;*/
+    border: 4px solid var(--anim-accent-1);
+    z-index: 2;
+}
+
+.translation-table__acid-field__wrap-selector:before {
+
+}
+.translation-table__acid-field__wrap-selector__sub{
+    border:4px solid var(--anim-accent-2);
+    flex: 1;
+    display: flex;
+}
+.translation-table__acid-field__wrap-selector__sub:before{
+    flex: 1;
+    content: "";
+    background: var(--anim-accent-3);
+}
+.translation-table__acid-field__wrap__wrap-text{
+    z-index: 2;
 }
