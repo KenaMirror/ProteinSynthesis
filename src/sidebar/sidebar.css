@@ -1,0 +1,75 @@
+.side-bar {
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.51);
+    width: 14vw;
+    height: 100%;
+    vertical-align: bottom;
+    display: flex;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition: width 100ms ease-in-out 0ms;
+}
+
+.side-bar > div {
+    margin: auto 0;
+}
+
+
+.side-bar_button {
+    background-color: rgba(0, 0, 0, 1); /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    /*display: inline-block;*/
+    padding: 16px 32px;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    transition-duration: 0.4s;
+    /*font-size: 16px;*/
+    /*font-size: ;*/
+}
+
+.side-bar_button:hover {
+    background: gray;
+}
+
+@media (max-width: 1290px) {
+    .side-bar {
+        --new-size: 8vw;
+    }
+
+    .side-bar {
+        width: var(--new-size);
+    }
+
+    .side-bar_button {
+        font-size: 0;
+        height: var(--new-size);
+        width: var(--new-size);
+        padding: 10px;
+        display: flex;
+    }
+    .side-bar_button:before{
+        content: "";
+        flex: 1;
+        background-size: cover;
+    }
+
+    #side-bar_button0:before {
+        background-image: url("../../resources/svg/dna-long-white.svg");
+    }
+
+    #side-bar_button1:before {
+        background-image: url("../../resources/svg/dna-ribo-white.svg");
+
+    }
+
+    #side-bar_button2:before {
+        background-image: url("../../resources/svg/settings.svg");
+    }
+
+}
