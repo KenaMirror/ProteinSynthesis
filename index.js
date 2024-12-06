@@ -1,11 +1,15 @@
 //Tabs.transcription.setup()
 
-(function () {
 
-    document.getElementById("side-bar_button0").textContent = BUNDLE["dna-line"]
-    document.getElementById("side-bar_button1").textContent = BUNDLE["dna-table"]
+(function () {
+    function extracted(id, text) {
+        document.getElementById(id).innerHTML += "<span>" + text + "</span>"
+    }
+
+    extracted("side-bar_button0", BUNDLE["dna-line"]);
+    extracted("side-bar_button1", BUNDLE["dna-table"])
     // noinspection JSValidateTypes
-    document.getElementById("side-bar_button2").textContent = BUNDLE["settings"]
+    extracted("side-bar_button2", BUNDLE["settings"])
 
     let container = createContainer();
     container.appendChild(createElement("div", ["class", "title_container"], it => {
@@ -18,11 +22,12 @@
     }))
 })()
 
-function gotoTab(tab){
+function gotoTab(tab) {
     clearDocument()
     tab.setup()
 
 }
+
 function clearDocument() {
     let children = []
     let htmlElementCollection = document.documentElement.children;
@@ -38,9 +43,10 @@ function clearDocument() {
         it.remove()
     })
 }
+
 const urlParams = new URLSearchParams(window.location.search);
 const startTab = urlParams.get('tab');
-if(Tabs[startTab]!==undefined){
+if (Tabs[startTab] !== undefined) {
     if (Tabs[startTab].setup !== undefined) {
         gotoTab(Tabs[startTab])
     }

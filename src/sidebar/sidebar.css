@@ -33,6 +33,10 @@
     /*font-size: ;*/
 }
 
+.side-bar_button > img {
+    width: 0;
+}
+
 .side-bar_button:hover {
     background: gray;
 }
@@ -46,6 +50,13 @@
         width: var(--new-size);
     }
 
+    .side-bar_button>span{
+        font-size: 0;
+    }
+    .side-bar_button > img {
+        flex: 1;
+    }
+
     .side-bar_button {
         font-size: 0;
         height: var(--new-size);
@@ -53,7 +64,8 @@
         padding: 10px;
         display: flex;
     }
-    .side-bar_button:before{
+
+   /* .side-bar_button:before {
         content: "";
         flex: 1;
         background-size: cover;
@@ -71,5 +83,5 @@
     #side-bar_button2:before {
         background-image: url("../../resources/svg/settings.svg");
     }
-
+*/
 }
