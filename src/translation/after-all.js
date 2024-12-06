@@ -24,9 +24,9 @@ Tabs.translation.registerSetup(() => {
         let rnaLine = Tabs.
             translation.rnaLine;
         if (table.tableElement.scrollHeight > window.outerHeight) {
-            rnaLine.element.parentElement.style.height=table.tableElement.scrollHeight+"px"
+            // rnaLine.element.parentElement.style.height=table.tableElement.scrollHeight+"px"
         } else{
-            rnaLine.element.parentElement.style.height=null
+            // rnaLine.element.parentElement.style.height=null
         }
 
     })

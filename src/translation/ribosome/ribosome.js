@@ -1,12 +1,13 @@
 (function () {
     let tmpContainer
-    Tabs.translation.registerSetup(()=>{
+    Tabs.translation.registerSetup(() => {
 
         Tabs.translation.ribosome = function () {
-            const ribosomeSize=192;
+            const ribosomeSize = 192;
             let container = createContainer()
-            tmpContainer=container;
+            tmpContainer = container;
             let mainRibosome = createDiv(container, "ribosome")
+            mainRibosome.style.opacity = "0"
             let leftRibosome = createDiv(mainRibosome, "ribosome__part ribosome__part__left")
             createDiv(leftRibosome, "ribosome__part__left__inner")
             let rightRibosome = createDiv(mainRibosome, "ribosome__part ribosome__part__right");
@@ -102,7 +103,7 @@
                                         myAnimations = []
                                     }
                                     for (let i = 0; i < myListeners.length; i++) {
-                                        myListeners[i](x,y)
+                                        myListeners[i](x, y)
                                     }
                                     // console.log("target: ",[x,y])
                                     // console.log(self.element.style.transform)
@@ -110,10 +111,10 @@
                                 },
 
                                 update: function (anim) {
-                                    let x=parseInt(anim.animations[0].currentValue.slice(0,-2))+ self.anchorX
-                                    let y=parseInt(anim.animations[1].currentValue.slice(0,-2))+ self.anchorY
+                                    let x = parseInt(anim.animations[0].currentValue.slice(0, -2)) + self.anchorX
+                                    let y = parseInt(anim.animations[1].currentValue.slice(0, -2)) + self.anchorY
                                     for (let i = 0; i < myListeners.length; i++) {
-                                        myListeners[i](x,y)
+                                        myListeners[i](x, y)
                                     }
                                     // console.log([x,y])
                                     /*progressLogEl.value = 'progress : '+Math.round(anim.progress)+'%';
@@ -140,8 +141,9 @@
             ribosome.grab = function (x, y, width) {
                 this.left.fastPoint(x - width / 2, y)
                 this.right.fastPoint(x + width / 2, y)
+                mainRibosome.style.removeProperty("opacity")
             }
-            ribosome.animateGrab = function (deltaX, deltaY, listener,easing=undefined, stepSpeed = undefined) {
+            ribosome.animateGrab = function (deltaX, deltaY, listener, easing = undefined, stepSpeed = undefined) {
                 (async function () {
                     await ribosome.untilStop()
                     let left
@@ -150,25 +152,25 @@
                         = ribosome.right;
                     let leftPosition = {x: left.x, y: left.y}
                     let rightPosition = {x: right.x, y: right.y}
-                    left.animationPoint(leftPosition.x - deltaX, leftPosition.y,easing, stepSpeed);
-                    right.animationPoint(rightPosition.x + deltaX, rightPosition.y,easing, stepSpeed);
+                    left.animationPoint(leftPosition.x - deltaX, leftPosition.y, easing, stepSpeed);
+                    right.animationPoint(rightPosition.x + deltaX, rightPosition.y, easing, stepSpeed);
 
-                    left.animationPoint(leftPosition.x - deltaX, leftPosition.y + deltaY,easing, stepSpeed);
-                    right.animationPoint(rightPosition.x + deltaX, rightPosition.y + deltaY,easing, stepSpeed);
+                    left.animationPoint(leftPosition.x - deltaX, leftPosition.y + deltaY, easing, stepSpeed);
+                    right.animationPoint(rightPosition.x + deltaX, rightPosition.y + deltaY, easing, stepSpeed);
 
-                    left.animationPoint(leftPosition.x, leftPosition.y + deltaY,easing, stepSpeed);
-                    right.animationPoint(rightPosition.x, rightPosition.y + deltaY,easing, stepSpeed);
+                    left.animationPoint(leftPosition.x, leftPosition.y + deltaY, easing, stepSpeed);
+                    right.animationPoint(rightPosition.x, rightPosition.y + deltaY, easing, stepSpeed);
                     await ribosome.untilStop()
                     listener()
-                    left.animationPoint(leftPosition.x, leftPosition.y,easing, stepSpeed);
-                    right.animationPoint(rightPosition.x, rightPosition.y,easing, stepSpeed);
+                    left.animationPoint(leftPosition.x, leftPosition.y, easing, stepSpeed);
+                    right.animationPoint(rightPosition.x, rightPosition.y, easing, stepSpeed);
                 })()
             }
             return ribosome
         }()
     })
-    setTimeout(()=>{
-        Tabs.translation.registerSetup(()=>{
+    setTimeout(() => {
+        Tabs.translation.registerSetup(() => {
             if (tmpContainer !== undefined) {
                 MAIN_ELEMENT.removeChild(tmpContainer)
                 MAIN_ELEMENT.appendChild(tmpContainer)
