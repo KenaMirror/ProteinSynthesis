@@ -1,4 +1,4 @@
-Tabs.transcription.registerSetup(()=>{
+Tabs.transcription.registerSetup(() => {
     Tabs.transcription.dnaLine = function () {
         let dnaLineElement = createDiv(createContainer(), "dna-line")
         let mainElement = createDiv(dnaLineElement, "dna-line__main");
@@ -67,7 +67,7 @@ Tabs.transcription.registerSetup(()=>{
                         "div"
                     )
                     // create(myField,"dna_line__main__field__text","p").innerText="?"
-                    myButton.innerText="?"
+                    myButton.innerText = "?"
                     let myMarker = create(myField, "dna-nucleotide-background2", "p");
                     myMarker.disabled = true
                     myMarker.addEventListener("mouseover", () => {
@@ -114,7 +114,7 @@ Tabs.transcription.registerSetup(()=>{
         self.moveUp = function () {
             self.select((self.index + self.dnaNucleotides.length) % (self.dnaNucleotides.length * 2), true)
         }
-        self.moveDown =function () {
+        self.moveDown = function () {
             self.select((self.index + self.dnaNucleotides.length) % (self.dnaNucleotides.length * 2), true)
         }
 
@@ -178,7 +178,9 @@ Tabs.transcription.registerSetup(()=>{
             for (let i = 0; i < BIO.Nucleotide.all.length; i++) {
                 let nucleotide = BIO.Nucleotide.all[i];
                 let div = nucleotideElement(nucleoButtons, "button", nucleotide);
-                div.innerText = nucleotide.name + "(" + (i + 1) + ")"
+                if (isMobileDevice()) {
+                    div.innerText = nucleotide.name
+                } else div.innerText = nucleotide.name + "(" + (i + 1) + ")"
                 div.addEventListener("click", () => self.onClicked(nucleotide))
                 // div.style.gridArea = "btn" + i
             }

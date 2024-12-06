@@ -9,11 +9,11 @@
 .dna-line {
     z-index: 1;
     align-self: center;
-    position: absolute;
     max-width: 82vw;
-    left: calc(50% - 7vw);
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin: auto;
+    /*left: calc(50% - 7vw);*/
+    /*top: 50%;*/
+    /*transform: translate(-50%, -50%);*/
 }
 
 .dna-line__main {
@@ -21,13 +21,13 @@
     border-width: 4px;
     border-style: solid;
     border-color: #454545;
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+    display: flex;
     color: white;
     padding: 10px;
 }
 .dna-line__main__title{
     display: flex;
+    white-space: nowrap;
     justify-content: end;
     align-items: center;
     width: 100%;
@@ -47,7 +47,9 @@
     /*min-height: 28px;*/
 }
 
-
+.dna-line__main__right{
+    flex: 1;
+}
 .dna-line__main__field {
     min-width: 16px;
     display: flex;
