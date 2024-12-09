@@ -50,9 +50,16 @@
     z-index: 2;
 
     position: fixed;
-    top: 0;
-    right: 14vw; box-shadow: none;
+    /*top: 0;*/
+    /*right: 14vw;*/
+    box-shadow: none;
     border: 0;
+}
+@media (max-aspect-ratio: 1/1) {
+    #modalButton{
+        /*top: calc(32px + 1em);*/
+        /*right: 0;*/
+    }
 }
 
 #modalButton #hover, #modalButton #active{

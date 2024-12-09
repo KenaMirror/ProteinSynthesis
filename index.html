@@ -43,7 +43,7 @@
     <script src="src/translation/table/table.js"></script>
     <!--endregion-->
     <script defer src="src/custom/custom-buttons.js"></script>
-<!--    <script defer src="src/custom/modal.js"></script>-->
+    <!--    <script defer src="src/custom/modal.js"></script>-->
     <!--region after all-->
     <script defer src="src/transcription/after-all.js"></script>
     <script defer src="src/translation/after-all.js"></script>
@@ -77,12 +77,23 @@
     <script>
         setTimeout(function () {
             let button = document.querySelector("#modalButton");
-            let sideBar=document.querySelector(".side-bar")
+            let sideBar = document.querySelector(".side-bar")
             console.log("load")
+
             function updatePadding() {
-                button.style.right=sideBar.clientWidth+"px"
+                let w = window.visualViewport.width;
+                let h = window.visualViewport.height;
+                if(w/h<=1){
+                    button.style.top = sideBar.clientHeight + "px"
+                    button.style.right = "0"
+                }else{
+                    button.style.top = "0"
+                    button.style.right = sideBar.clientWidth + "px"
+
+                }
                 setTimeout(updatePadding)
             }
+
             updatePadding()
         })
 
@@ -94,18 +105,16 @@
             document.getElementById('myModal').style.display = 'none';
         }
     </script>
-    <div class="side-bar" >
-        <div style="display: table-cell; vertical-align: middle;">
-            <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
-                <img src="resources/svg/dna-long-white.svg">
-            </button>
-            <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)">
-                <img src="resources/svg/dna-ribo-white.svg">
-            </button>
-            <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)">
-                <img src="resources/svg/settings.svg">
-            </button>
-        </div>
+    <div class="side-bar">
+        <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
+            <img src="resources/svg/dna-long-white.svg">
+        </button>
+        <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)">
+            <img src="resources/svg/dna-ribo-white.svg">
+        </button>
+        <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)">
+            <img src="resources/svg/settings.svg">
+        </button>
     </div>
 
 </body>
