@@ -1,0 +1,34 @@
+.title_container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.title_container > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title_header {
+    font-size: calc(var(--font-size) + 10px);
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: 4px solid var(--accent);
+    border-radius: 16px;
+    padding: 4px;
+    text-align: center;
+    width: fit-content;
+    align-self: center;
+}
+
+.title_text {
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: 4px solid gray;
+    border-radius: 16px;
+    padding: 4px;
+
+    text-align: center;
+    width: 50vw;
+    max-width: calc(72vw - 80px);
+}
