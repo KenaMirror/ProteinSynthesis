@@ -64,24 +64,4 @@
         padding: 10px;
         display: flex;
     }
-
-   /* .side-bar_button:before {
-        content: "";
-        flex: 1;
-        background-size: cover;
-    }
-
-    #side-bar_button0:before {
-        background-image: url("../../resources/svg/dna-long-white.svg");
-    }
-
-    #side-bar_button1:before {
-        background-image: url("../../resources/svg/dna-ribo-white.svg");
-
-    }
-
-    #side-bar_button2:before {
-        background-image: url("../../resources/svg/settings.svg");
-    }
-*/
 }
