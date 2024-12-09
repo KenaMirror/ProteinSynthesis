@@ -11,15 +11,20 @@
     /*--translation-table__acid-field__canvas-height: var(--size-48);*/
 }
 
+:has(.translation-table_container) {
+    overflow: auto;
+}
+
 .translation-table_container {
     margin: auto 0;
     display: grid;
     width: 86vw;
-    height: min-content;
+    /*height: min-content;*/
     left: 0;
     grid-template-rows: auto;
     grid-template-columns: auto auto;
-    overflow: visible;
+    /*overflow: ;*/
+    height: fit-content;
     /*min-height: 100%;*/
 }
 
@@ -37,10 +42,12 @@
     color: white;
     z-index: 1;
 }
-.translation_generate_next:hover{
+
+.translation_generate_next:hover {
     border-color: white;
 }
-.translation_generate_next:active{
+
+.translation_generate_next:active {
     border-color: lightgray;
 }
 
@@ -97,7 +104,7 @@
     z-index: 1;
 }
 
-.translation-table__acid-field__wrap__wrap-text{
+.translation-table__acid-field__wrap__wrap-text {
     margin: auto;
 }
 
