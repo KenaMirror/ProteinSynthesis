@@ -22,8 +22,17 @@ const Time = function () {
     update()
     return Time
 }()
-var MAIN_WINDOW = window
-var MAIN_ELEMENT = document.children[0]
+const MAIN_WINDOW = window
+
+
+/**@type HTMLDivElement*/
+function MAIN_ELEMENT_CONTAINER() {
+    if (MAIN_ELEMENT_CONTAINER.__ === undefined || MAIN_ELEMENT_CONTAINER.__ == null) {
+        // throw null
+        MAIN_ELEMENT_CONTAINER.__ = document.querySelector(".main-container")
+    }
+    return MAIN_ELEMENT_CONTAINER.__
+}
 
 class Mathf {
     static clamp(value) {
@@ -35,7 +44,8 @@ class Mathf {
     }
 
     static randomElement(array) {
-        return array[this.randInt(0, array.length)]
+        return array[0]
+        // return array[this.randInt(0, array.length)]
     }
 }
 
@@ -91,13 +101,14 @@ function isMobileDevice() {
     return /Mobi|Android/i.test(navigator.userAgent);
 }
 
-setTimeout(()=>{
-    let disposable = Disposable(()=>false);
-    onUIChanges(disposable,()=>{
-        document.body.parentElement.classList.toggle("is-mobile",isMobileDevice())
+setTimeout(() => {
+    let disposable = Disposable(() => false);
+    onUIChanges(disposable, () => {
+        document.body.parentElement.classList.toggle("is-mobile", isMobileDevice())
     })
 
 })
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -30,7 +30,7 @@ function gotoTab(tab) {
 
 function clearDocument() {
     let children = []
-    let htmlElementCollection = document.documentElement.children;
+    let htmlElementCollection = MAIN_ELEMENT_CONTAINER().children;
     for (let i = 0; i < htmlElementCollection.length; i++) {
         let it = htmlElementCollection[i];
 

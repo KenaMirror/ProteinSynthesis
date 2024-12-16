@@ -50,7 +50,6 @@
 .translation_generate_next:active {
     border-color: lightgray;
 }
-
 .translation-table {
     z-index: 1;
     display: grid;
@@ -117,4 +116,27 @@
     /*overflow: clip;*/
     /*width: var(--size-128);*/
     /*height: var(--size-48);*/
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .translation-table {
+        max-width: unset;
+        min-width: unset;
+        width: 60%;
+        margin: 0 auto;
+        /*height: 50%;*/
+        /*aspect-ratio: 9/10;*/
+    }
+
+    .translation-table_container {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+    }
+    .translation_generate_next{
+        margin-top: 48px;
+        align-self: center;
+    }
 }

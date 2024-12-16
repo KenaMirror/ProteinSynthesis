@@ -1,5 +1,35 @@
 const AMINO_ACID_CALCULATED_SIZE = 38;
 Tabs.translation.registerSetup(() => {
+    let prevAnimIsPocket = UI.isPocket();
+
+    function translateX(self, next) {
+        let deltaX;
+        if (UI.isPocket()) {
+            deltaX = Math.sqrt(3) * AMINO_ACID_CALCULATED_SIZE;
+        } else {
+            deltaX = AMINO_ACID_CALCULATED_SIZE;
+        }
+        if (next) return self.index * deltaX + deltaX;
+        return self.index * deltaX;
+    }
+
+    function computeDeltaY(index) {
+        let currentPocket = UI.isPocket();
+        let isEven = (index % 2) === 0;
+        let deltaY;
+        // noinspection EqualityComparisonWithCoercionJS
+        if (isEven == !currentPocket) {
+            deltaY = -32
+        } else {
+            deltaY = 32
+        }
+        if (prevAnimIsPocket !== currentPocket) {
+            deltaY = 0;
+            prevAnimIsPocket = currentPocket;
+        }
+        return currentPocket ? 0 : deltaY;
+    }
+
     Tabs.translation.aminoAcidField = function () {
         const animationSpeed = 100
         const animationEasing = 'easeInOutSine'
@@ -34,12 +64,7 @@ Tabs.translation.registerSetup(() => {
         setTimeout(init, 0)
         ribosome.right.addMoveListener((x, y) => {
             var self = Tabs.translation.aminoAcidField;
-            let deltaY;
-            if ((self.index % 2) === 0) {
-                deltaY = 32
-            } else {
-                deltaY = -32
-            }
+            let deltaY = computeDeltaY(self.index);
             let newX = x + ribosome.right.width - elem.scrollWidth/* + */;
             let newY = y - elem.clientHeight / 2;
             if (self.currentAnimation !== undefined) {
@@ -51,7 +76,7 @@ Tabs.translation.registerSetup(() => {
                     animations[i].animatable.transforms.list.set("translate", '' + newX + 'px,' + newY + 'px')
                 }
             } else {
-                let transform = 'translate(' + newX + 'px,' + newY + 'px) translateX(' + (self.index * AMINO_ACID_CALCULATED_SIZE) + 'px) translateY(' + deltaY + "px)";
+                let transform = 'translate(' + newX + 'px,' + newY + 'px) translateX(' + translateX(self, false) + 'px) translateY(' + deltaY + "px)";
                 //"translate("+newX+"px, "+newY+"px) translateX(228px) translateY(32px)"
                 // console.log(transform)
                 elem.style.transform = transform
@@ -70,16 +95,16 @@ Tabs.translation.registerSetup(() => {
                 return this.currentAnimation != null
             },
             showNext: function (duration = animationSpeed, easing = animationEasing) {
-                elem.children[this.size - 1 - this.index].style = ""
-                let deltaY;
-                if ((this.index % 2) === 0) {
-                    deltaY = -32
-                } else {
-                    deltaY = 32
-                }
+                let deltaY = computeDeltaY(this.index + 1);
+
+
+                let translateX_ = translateX(this, true);
+
                 if (!this.animations) {
-                    updateAminoAcid(this.index * AMINO_ACID_CALCULATED_SIZE + AMINO_ACID_CALCULATED_SIZE, deltaY)
+                    updateAminoAcid(translateX_, deltaY)
                 } else {
+                    let curIndex = this.size - 1 - this.index;
+
                     let self = this
                     if (this.currentAnimation !== undefined) {
                         this.currentAnimation.seek(this.currentAnimation.duration)
@@ -87,7 +112,7 @@ Tabs.translation.registerSetup(() => {
                     }
                     this.currentAnimation = anime({
                         targets: elem,
-                        translateX: this.index * AMINO_ACID_CALCULATED_SIZE + AMINO_ACID_CALCULATED_SIZE,
+                        translateX: translateX_,
                         translateY: deltaY,
                         duration: duration,
                         easing: easing,
@@ -95,6 +120,7 @@ Tabs.translation.registerSetup(() => {
                             self.currentAnimation = undefined;
                         },
                         begin: function (anim) {
+                            elem.children[curIndex].classList.toggle("hidden", false)
                             self.currentAnimation = anim;
                         }
                     })
@@ -115,11 +141,8 @@ Tabs.translation.registerSetup(() => {
                 elem.innerHTML = ""
                 for (let i = aminoAcids.length - 1; i >= 0; i--) {
                     let name = aminoAcids[i].name;
-                    let extraStyle = (((i + 1) % 2) === 0) ? " amino-acid-offset amino-idx" : " amino-idx"
-                    extraStyle += i
                     let newElem = document.createElement('div')
-                    newElem.className = "amino-acid__container" + extraStyle
-                    newElem.style.opacity = "0";
+                    newElem.className = "amino-acid__container hidden amino-idx" + i
                     newElem.innerHTML = "<div class=\"amino-acid\">\n" +
                         "                <div class=\"amino-acid__inner\">\n" +
                         "                    <div class=\"amino-acid__inner__text\">" + name + "</div>\n" +
