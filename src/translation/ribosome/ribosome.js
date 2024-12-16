@@ -4,7 +4,7 @@
 
         Tabs.translation.ribosome = function () {
             const ribosomeSize = 192;
-            let container = createContainer()
+            let container = createContainer("ribosome")
             tmpContainer = container;
             let mainRibosome = createDiv(container, "ribosome")
             mainRibosome.style.opacity = "0"
@@ -152,18 +152,39 @@
                         = ribosome.right;
                     let leftPosition = {x: left.x, y: left.y}
                     let rightPosition = {x: right.x, y: right.y}
-                    left.animationPoint(leftPosition.x - deltaX, leftPosition.y, easing, stepSpeed);
-                    right.animationPoint(rightPosition.x + deltaX, rightPosition.y, easing, stepSpeed);
+                    if(UI.isPocket()){
+                        let tmp=deltaX;
+                        // noinspection JSSuspiciousNameCombination
+                        deltaX=deltaY;
+                        deltaY=tmp;
 
-                    left.animationPoint(leftPosition.x - deltaX, leftPosition.y + deltaY, easing, stepSpeed);
-                    right.animationPoint(rightPosition.x + deltaX, rightPosition.y + deltaY, easing, stepSpeed);
+                        left.animationPoint(leftPosition.x, leftPosition.y - deltaY, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x, rightPosition.y + deltaY, easing, stepSpeed);
 
-                    left.animationPoint(leftPosition.x, leftPosition.y + deltaY, easing, stepSpeed);
-                    right.animationPoint(rightPosition.x, rightPosition.y + deltaY, easing, stepSpeed);
-                    await ribosome.untilStop()
-                    listener()
-                    left.animationPoint(leftPosition.x, leftPosition.y, easing, stepSpeed);
-                    right.animationPoint(rightPosition.x, rightPosition.y, easing, stepSpeed);
+                        left.animationPoint(leftPosition.x - deltaX, leftPosition.y - deltaY, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x - deltaX, rightPosition.y + deltaY, easing, stepSpeed);
+
+                        left.animationPoint(leftPosition.x - deltaX, leftPosition.y, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x - deltaX, rightPosition.y, easing, stepSpeed);
+
+                        await ribosome.untilStop()
+                        listener()
+                        left.animationPoint(leftPosition.x, leftPosition.y, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x, rightPosition.y, easing, stepSpeed);
+                    }else{
+                        left.animationPoint(leftPosition.x - deltaX, leftPosition.y, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x + deltaX, rightPosition.y, easing, stepSpeed);
+
+                        left.animationPoint(leftPosition.x - deltaX, leftPosition.y + deltaY, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x + deltaX, rightPosition.y + deltaY, easing, stepSpeed);
+
+                        left.animationPoint(leftPosition.x, leftPosition.y + deltaY, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x, rightPosition.y + deltaY, easing, stepSpeed);
+                        await ribosome.untilStop()
+                        listener()
+                        left.animationPoint(leftPosition.x, leftPosition.y, easing, stepSpeed);
+                        right.animationPoint(rightPosition.x, rightPosition.y, easing, stepSpeed);
+                    }
                 })()
             }
             return ribosome
@@ -172,8 +193,8 @@
     setTimeout(() => {
         Tabs.translation.registerSetup(() => {
             if (tmpContainer !== undefined) {
-                MAIN_ELEMENT.removeChild(tmpContainer)
-                MAIN_ELEMENT.appendChild(tmpContainer)
+                MAIN_ELEMENT_CONTAINER().removeChild(tmpContainer)
+                MAIN_ELEMENT_CONTAINER().appendChild(tmpContainer)
             }
         })
     })

@@ -5,22 +5,48 @@
     height: 0;
 }
 .rna-line {
-    display: grid;
-    grid-template-rows: repeat(auto-fill,1fr);
+    display: flex;
+    flex-direction: column;
+}
+.rna-line{
+    flex: 1;
 }
 
 .rna-line__item {
     border-color: #6D7080;
     border-style: solid;
     border-width: 4px;
-    min-width: 36px;
-    min-height: 100px;
-    display: grid;
+    width: 36px;
+    height: 108px;
+    display: flex;
+    flex-direction: column;
     transform: translateY(-50%);
-    grid-template-rows: repeat(auto-fill,1fr);
     transition-duration: 100ms;
 }
 
 .selected {
     border-color: #FFD37F;
+}
+.rna-line__item>*{
+    aspect-ratio: 1;
+    flex: 1;
+}
+@media (max-aspect-ratio: 1/1) {
+    .rna-line-container{
+        /*0.625/2*/
+        top: 31.25%;
+    }
+    .rna-line__item>*{
+        transform-origin: center;
+        rotate: -90deg;
+    }
+    .rna-line__item{
+        /*flex-direction: column-reverse;*/
+    }
+    .rna-line{
+        /* Центрируем текст по вертикали */
+        /*transform-origin: 54px center; !* Устанавливаем точку вращения в центр элемента *!*/
+        transform-origin:  right top; /* Устанавливаем точку вращения в центр элемента */
+        rotate: 90deg;
+    }
 }

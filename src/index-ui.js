@@ -1,8 +1,8 @@
 const Tabs = function () {
     let myPopups = []
     let popupContainer = function () {
-        let container = createContainer();
-        container.classList.add("permanent")
+
+        let container = createDiv(document.children[0], "element__container permanent");
         return createDiv(container, "popup_container")
     }()
 
@@ -22,7 +22,7 @@ const Tabs = function () {
     }
 
     function update() {
-
+        // if(true)return
         for (let i = 0; i < myPopups.length; i++) {
             let popup = myPopups[i];
             if (popup.update()) {
@@ -49,7 +49,7 @@ const Tabs = function () {
             },
             setup() {
                 Disposer.reset()
-                document.querySelector("#modalButton").style.display="none"
+                document.querySelector("#modalButton").style.display = "none"
                 setupMethods.forEach(it => it())
                 postprocessors.forEach(it => it())
             }
@@ -83,6 +83,14 @@ const Tabs = function () {
 
 }()
 
+const UI=(function (){
+   return {
+       isPocket(){
+           let viewport = window.visualViewport;
+           return viewport.width<=viewport.height;
+       }
+   }
+})()
 function createAttribute(name, value) {
     let attr = document.createAttribute(name);
     attr.value = value;
@@ -113,10 +121,14 @@ function createElement(tagName, ...params) {
 }
 
 
-function createContainer() {
+/**@param id {string}*/
+function createContainer(id = undefined) {
     let element = document.createElement("div");
     element.className = "element__container"
-    MAIN_ELEMENT.append(element)
+    if (id !== undefined) {
+        element.id = id
+    }
+    MAIN_ELEMENT_CONTAINER().append(element)
     return element
 }
 

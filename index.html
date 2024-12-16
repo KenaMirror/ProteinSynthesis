@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Protein Synthesis</title>
@@ -6,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
             integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
     <script src="src/parsers/parsers.js"></script>
     <!--region bundles-->
     <bundle lang="en" href="resources/bundles/bundle.properties"></bundle>
@@ -67,7 +69,8 @@
 
     <div id="myModal">
         <div id="modalContent">
-            <img onclick="closeModal()" style="float:right; cursor: pointer;" src="resources/svg/close.svg" width="32"
+            <img onclick="closeModal()" style="float:right; cursor: pointer;" src="resources/svg/close.svg"
+                 width="32"
                  height="32" alt="Close">
             <h2 style="font-size: calc(var(--font-size) + 10px);">Информация</h2>
             <p style="font-size: calc(var(--font-size) );" id="text_target"></p>
@@ -81,12 +84,10 @@
             console.log("load")
 
             function updatePadding() {
-                let w = window.visualViewport.width;
-                let h = window.visualViewport.height;
-                if(w/h<=1){
-                    button.style.top = sideBar.clientHeight + "px"
+                if (UI.isPocket()) {
+                    button.style.top = "0"
                     button.style.right = "0"
-                }else{
+                } else {
                     button.style.top = "0"
                     button.style.right = sideBar.clientWidth + "px"
 
@@ -105,16 +106,20 @@
             document.getElementById('myModal').style.display = 'none';
         }
     </script>
-    <div class="side-bar">
-        <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
-            <img src="resources/svg/dna-long-white.svg">
-        </button>
-        <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)">
-            <img src="resources/svg/dna-ribo-white.svg">
-        </button>
-        <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)">
-            <img src="resources/svg/settings.svg">
-        </button>
+    <div class="main-view">
+        <div class="side-bar">
+            <button id="side-bar_button0" class="side-bar_button" onclick="gotoTab(Tabs.transcription)">
+                <img src="resources/svg/dna-long-white.svg">
+            </button>
+            <button id="side-bar_button1" class="side-bar_button" onclick="gotoTab(Tabs.translation)">
+                <img src="resources/svg/dna-ribo-white.svg">
+            </button>
+            <button id="side-bar_button2" class="side-bar_button" onclick="gotoTab(Tabs.settings)">
+                <img src="resources/svg/settings.svg">
+            </button>
+        </div>
+        <div class="main-container"></div>
     </div>
 
 </body>
+</html>

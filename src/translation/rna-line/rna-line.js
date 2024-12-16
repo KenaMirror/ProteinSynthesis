@@ -1,18 +1,21 @@
 Tabs.translation.registerSetup(() => {
     Tabs.translation.rnaLine = function () {
-        const itemWidth = 44;
-        const itemHeight = 100 + 8;
-        let container = createContainer();
+        const itemWidth = 36 + 8;
+        const itemHeight = 108 + 8;
+        let container = createContainer("rna-line");
         let rnaLineContainer = createDiv(container, "rna-line-container");
         let rnaLineElement = createDiv(rnaLineContainer, "rna-line");
         // UI.translation.ribosome.fastPoint(window.innerWidth/2, window.innerHeight/2)
 
         rnaLineElement.style.cssText = CssParser.stringify(rnaLineElement.style)
-        setTimeout(()=>{
+        setTimeout(() => {
             onUIChanges(Disposer.create(), () => {
                 let rect = rnaLineContainer.getBoundingClientRect();
                 let elementRect = rnaLineElement.getBoundingClientRect();
-                Tabs.translation.ribosome.grab(rect.x + rect.width / 2, rect.y + rect.height / 2, elementRect.width)
+                let delta_value = UI.isPocket() ? elementRect.height : elementRect.width;
+                Tabs.translation.ribosome.grab(rect.x + rect.width / 2, rect.y, delta_value)
+                document.body.style.setProperty("--rna-line-width", delta_value + "px")
+                document.body.style.setProperty("--rna-line-m-width", -delta_value + "px")
             })
         })
 
