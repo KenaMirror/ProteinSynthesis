@@ -44,8 +44,8 @@ class Mathf {
     }
 
     static randomElement(array) {
-        return array[0]
-        // return array[this.randInt(0, array.length)]
+        // return array[0]
+        return array[this.randInt(0, array.length)]
     }
 }
 
