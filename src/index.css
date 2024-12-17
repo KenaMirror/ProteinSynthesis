@@ -1,0 +1,160 @@
+
+:root {
+    --font-size: 20px;
+    --background-color: #32472c;
+
+    --accent: #ffd37f;
+
+    --thymine-main-color: #D86467;
+    --thymine-sub-color: #9a474a;
+    --uracil-main-color: #DB9265;
+    --uracil-sub-color: #9c6848;
+    --adenine-main-color: #E7797C;
+    --adenine-sub-color: #A45658;
+    --cytosine-main-color: #6692D9;
+    --cytosine-sub-color: #49689b;
+    --guanine-main-color: #67da65;
+    --guanine-sub-color: #4a9c48;
+}
+
+/*region title*/
+.title_container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.title_header {
+    font-size: calc(var(--font-size) + 10px);
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: 4px solid var(--accent);
+    border-radius: 16px;
+    padding: 4px;
+    text-align: center;
+    width: fit-content;
+    align-self: center;
+}
+
+.title_text {
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: 4px solid gray;
+    border-radius: 16px;
+    padding: 4px;
+
+    text-align: center;
+    width: 50vw;
+    max-width: calc(72vw - 80px);
+}
+
+/*endregion*/
+* {
+    font-size: var(--font-size);
+}
+
+body {
+    background-color: var(--background-color);
+    margin: 0;
+}
+
+.side-bar_button {
+    background-color: rgba(0, 0, 0, 1); /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    /*display: inline-block;*/
+    padding: 16px 32px;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    transition-duration: 0.4s;
+    /*font-size: 16px;*/
+    /*font-size: ;*/
+}
+
+.side-bar_button:hover {
+    background: gray;
+}
+
+.element__container {
+    overflow: hidden;
+    position: absolute;
+
+
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+}
+
+
+.nucleotide__item {
+    border-width: 4px;
+    border-style: solid;
+    text-align: center;
+    /*padding: 4px;*/
+    padding: 0;
+}
+
+[hidden], .hidden {
+    display: none;
+}
+
+/*region nucleotides*/
+.nucleotide__item_U {
+    background-color: var(--uracil-main-color);
+    border-color: var(--uracil-sub-color);
+}
+
+.nucleotide__item_T {
+    background-color: var(--thymine-main-color);
+    border-color: var(--thymine-sub-color);
+}
+
+.nucleotide__item_C {
+    background-color: var(--cytosine-main-color);
+    border-color: var(--cytosine-sub-color);
+}
+
+.nucleotide__item_A {
+    background-color: var(--adenine-main-color);
+    border-color: var(--adenine-sub-color);
+}
+
+.nucleotide__item_G {
+    background-color: var(--guanine-main-color);
+    border-color: var(--guanine-sub-color);
+}
+
+.nucleotide__item_U[data-pressed='1'], .nucleotide__item_U:active {
+    background-color: var(--uracil-sub-color);
+    border-color: var(--uracil-main-color);
+}
+
+.nucleotide__item_T[data-pressed='1'], .nucleotide__item_T:active {
+    background-color: var(--thymine-sub-color);
+    border-color: var(--thymine-main-color);
+}
+
+.nucleotide__item_C[data-pressed='1'], .nucleotide__item_C:active {
+    background-color: var(--cytosine-sub-color);
+    border-color: var(--cytosine-main-color);
+}
+
+.nucleotide__item_A[data-pressed='1'], .nucleotide__item_A:active {
+    background-color: var(--adenine-sub-color);
+    border-color: var(--adenine-main-color);
+}
+
+.nucleotide__item_G[data-pressed='1'], .nucleotide__item_G:active {
+    background-color: var(--guanine-sub-color);
+    border-color: var(--guanine-main-color);
+}
+
+/*endregion*/
+body {
+    background-color: #32472c
+}

@@ -1,0 +1,21 @@
+
+.rna-line {
+
+}
+
+.rna-line__item {
+    border-color: #6D7080;
+    border-style: solid;
+    border-width: 4px;
+    min-width: 36px;
+    width: 1fr;
+    min-height: 100px;
+    height: 1fr;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    transition-duration: 100ms;
+}
+
+.selected {
+    border-color: #FFD37F;
+}

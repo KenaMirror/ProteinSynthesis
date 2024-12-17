@@ -1,0 +1,142 @@
+:root {
+    --gray-button-main-color: #BFBFBF;
+    --gray-button-main-outline-color: #888888;
+
+    --gray-button-hover-outline-color: #606060;
+    --gray-button-disabled-color: #737373;
+}
+
+.dna-line {
+    z-index: 1;
+    align-self: center;
+    position: absolute;
+    max-width: 82vw;
+    left: calc(50% - 7vw);
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dna-line__main {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-width: 4px;
+    border-style: solid;
+    border-color: #454545;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    color: white;
+    padding: 10px;
+}
+.dna-line__main__title{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+    padding: 0;
+}
+.dna-line__main__left {
+    text-align: right;
+    margin-right: 30px;
+}
+.dna-line__main__left,.dna-line__main__right{
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+}
+.dna-line__main__left > *, .dna-line__main__right > * {
+    margin-top: 8px;
+    /*min-height: 28px;*/
+}
+
+
+.dna-line__main__field {
+    min-width: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*display: ;*/
+    /*grid-template-rows: 100%;*/
+    text-align: center;
+}
+
+.dna-nucleotide-background2 {
+    font-size: calc(var(--font-size) + 2px);
+    width: 16px;
+    height: 28px;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    position: absolute;
+}
+.dna_line__main__field__text{
+    position: absolute;
+    text-align: center;
+}
+.dna-nucleotide-background {
+    font-size: calc(var(--font-size) + 2px);
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*padding: 0;*/
+    /*background-color: #eee;*/
+}
+
+/* On mouse-over, add a grey background color */
+.dna-nucleotide-background:hover, .dna-nucleotide-background[data-hover="1"] {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.dna-nucleotide-background[data-pressed="1"] {
+    background-color: #FFD37F;
+}
+
+.dna-line__main__dna1, .dna-line__main__dna2, .dna-line__main__rna {
+    display: flex;
+}
+.dna-line__main__dna1>*, .dna-line__main__dna2>*, .dna-line__main__rna>*{
+    margin: 0;
+    padding: 0;
+
+}
+.dna-line__buttons {
+}
+
+.dna-line__buttons__nucleo {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.dna-line__buttons__other {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.dna-line__gray__button {
+    border-style: solid;
+    border-width: 4px;
+    border-color: var(--gray-button-main-outline-color);
+    background-color: var(--gray-button-main-color);
+}
+
+.dna-line__gray__button:hover /*, .dna-line__gray__button[data-pressed="1"]*/
+{
+    border-color: var(--gray-button-hover-outline-color);
+}
+
+
+.dna-line__gray__button:active /*, .dna-line__gray__button[data-pressed="1"]*/
+{
+    border-color: var(--gray-button-main-color);
+    background-color: var(--gray-button-main-outline-color);
+}
+
+.dna-line__gray__button:disabled /*, .dna-line__gray__button[data-pressed="1"]*/
+{
+    border-color: var(--gray-button-disabled-color);
+    background-color: var(--gray-button-disabled-color);
+}
