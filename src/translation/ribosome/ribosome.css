@@ -39,11 +39,12 @@
 
 .ribosome__part__left__inner::before {
     content: "";
-    background-image: url("/resources/svg/ribosome/left_inner.svg");
+    /*TODO inline svg because of github?*/
+    background-image: url("left_inner.svg");
 }
 
 .ribosome__part__left__inner {
-    background-image: url("/resources/svg/ribosome/left.svg");
+    background-image: url("left.svg");
     height: var(--ribosome-size);
     width: var(--ribosome-left);
     display: flex;
@@ -55,13 +56,13 @@
 
 .ribosome__part__right__inner:before {
     content: "";
-    background-image: url("/resources/svg/ribosome/right_inner.svg");
+    background-image: url("right_inner.svg");
 }
 
 .ribosome__part__right__inner {
     height: var(--ribosome-size);
     width: var(--ribosome-right);
-    background-image: url("/resources/svg/ribosome/right.svg");
+    background-image: url("right.svg");
     display: flex;
     margin: auto;
 }
