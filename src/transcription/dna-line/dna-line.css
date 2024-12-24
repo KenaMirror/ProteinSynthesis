@@ -9,7 +9,7 @@
 .dna-line {
     z-index: 1;
     align-self: center;
-    max-width: 82vw;
+    max-width: 82%;
     margin: auto;
     /*left: calc(50% - 7vw);*/
     /*top: 50%;*/

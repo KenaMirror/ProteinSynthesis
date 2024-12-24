@@ -21,7 +21,7 @@
         }))
     }))
 
-    setTimeout(()=>{
+    setTimeout(() => {
         let expectedWidth = 1920;
         onUIChanges(infiniteDisposable, updateSpecialScale)
 
@@ -38,11 +38,14 @@
                 htmlTagStyle.transformOrigin = 'top left';
                 htmlTagStyle.width = `${window.innerWidth / scale}px`
                 htmlTagStyle.height = `${vh / scale}px`
+                UI.__global__scale__ = 1 / scale;
             } else {
                 htmlTagStyle.transform = ""
+                UI.__global__scale__ = 1;
                 htmlTagStyle.width = ``
             }
         }
+
         SETTINGS.__target__.useConstantUIOnBigWidth.addListener(newValue => {
             setTimeout(updateSpecialScale)
         })

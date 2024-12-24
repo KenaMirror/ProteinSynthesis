@@ -1,8 +1,4 @@
 :root {
-    --size-128: min(11.851851852vh, 11.851851852vw);
-    --size-32: min(2.962962963vh, 2.962962963vw);
-    --size-192: min(17.777777778vh, 17.777777778vw);
-    --size-48: min(4.444444444vh, 4.444444444vw);
     /*--size-567:// min(4.444444444vh,4.444444444vw);*/
     /*--size-567:// min(4.444444444vh,4.444444444vw);*/
     /*--translation-table__acid-field__canvas-width: 100%;*/
@@ -18,11 +14,11 @@
 .translation-table_container {
     margin: auto 0;
     display: grid;
-    width: 86vw;
+    width: 86%;
     /*height: min-content;*/
     left: 0;
     grid-template-rows: auto;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     /*overflow: ;*/
     height: fit-content;
     /*min-height: 100%;*/
@@ -54,10 +50,14 @@
     z-index: 1;
     display: grid;
     /*min-height: 80vh;*/
-    max-width: 30vw;
-    min-width: 40vw;
+    /*max-width: 34.88372093%;*/
+    max-width: 69.76744186%;
+    /*min-width: 46.51162791%;*/
+    min-width: 93.02325582%;
+    /*max-width: 30vw;*/
+    /*min-width: 40vw;*/
     height: fit-content;
-    max-height: 100vh;
+    max-height: 100%;
     grid-template-columns: 1fr repeat(4, 4fr) 1fr;
     grid-template-rows: 1fr repeat(4, 6fr);
 }

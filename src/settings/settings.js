@@ -32,7 +32,9 @@ const SETTINGS = (function () {
         coloredNucleoTable = settingKey(true)
         coloredNucleoTableCross = settingKey(true)
         nucleoTableSelectionEnabled = settingKey(true)
-        useConstantUIOnBigWidth = settingKey(false)
+        useConstantUIOnBigWidth = settingKey(false, it => {
+            document.head.parentElement.style.setProperty("--is-constant-ui", it ? 1 : 0)
+        })
         coloredNucleoLine = settingKey(true)
         backgroundColor = settingKey("#9cb295", newcolor => {
             setTimeout(() => {

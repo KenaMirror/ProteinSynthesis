@@ -29,6 +29,6 @@
     padding: 4px;
 
     text-align: center;
-    width: 50vw;
-    max-width: calc(72vw - 80px);
+    width: 50%;
+    max-width: calc(72% - 80px);
 }

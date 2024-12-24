@@ -13,7 +13,8 @@ Tabs.translation.registerSetup(() => {
                 let rect = rnaLineContainer.getBoundingClientRect();
                 let elementRect = rnaLineElement.getBoundingClientRect();
                 let delta_value = UI.isPocket() ? elementRect.height : elementRect.width;
-                Tabs.translation.ribosome.grab(rect.x + rect.width / 2, rect.y, delta_value)
+                let x = rect.x + rect.width / 2;
+                Tabs.translation.ribosome.grab(x*UI.__global__scale__, rect.y*UI.__global__scale__, delta_value*UI.__global__scale__)
                 document.body.style.setProperty("--rna-line-width", delta_value + "px")
                 document.body.style.setProperty("--rna-line-m-width", -delta_value + "px")
             })
