@@ -37,18 +37,18 @@ Tabs.translation.registerSetup(() => {
             Tabs.translation.rnaLine.selectNext(250 / 2)
             if (Tabs.translation.aminoAcidField.index + 1 < Tabs.translation.aminoAcidField.size) {
                 Tabs.translation.aminoAcidField.showNext(500)
-                Tabs.announce("Верно", 120).style.color = "green"
+                UI.informSuccess()
             } else {
                 Tabs.translation.aminoAcidField.showNext(500)
                 if (Tabs.translation.table.generateNextButton().classList.contains("hidden")) {
-                    Tabs.announce("Верно", 120).style.color = "green"
+                    UI.informSuccess()
                 }
                 Tabs.translation.table.generateNextButton().classList.remove("hidden")
             }
         } else {
 
             if (Tabs.translation.aminoAcidField.index + 1 < Tabs.translation.aminoAcidField.size) {
-                Tabs.announce("Неверно", 120).style.color = "red"
+                UI.informError()
             }
         }
     })

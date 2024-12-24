@@ -44,13 +44,18 @@ class Mathf {
     }
 
     static randomElement(array) {
+
         // return array[0]
         return array[this.randInt(0, array.length)]
     }
 }
 
-/**@returns Disposable*/
-function Disposable(condition) {
+if (urlParams.has("debug__mode")) {
+    Mathf.randomElement = it => it[0]
+}
+
+
+function DisposableImpl(condition) {
     class Disposable {
         /**@returns boolean*/
         isDisposed() {
@@ -61,7 +66,10 @@ function Disposable(condition) {
     return new Disposable()
 }
 
-const Disposer = function () {
+const infiniteDisposable = DisposableImpl(() => false)
+const zeroDisposable = DisposableImpl(() => true)
+
+function createDisposer() {
     let globalIteration = 0;
     return {
         reset() {
@@ -71,10 +79,12 @@ const Disposer = function () {
         create() {
             let myId = globalIteration + 1;
             myId -= 1;
-            return new Disposable(() => globalIteration !== myId)
+            return DisposableImpl(() => globalIteration !== myId)
         }
     }
-}()
+}
+
+const Disposer = createDisposer()
 
 
 const onEachUpdate = function () {
@@ -102,8 +112,7 @@ function isMobileDevice() {
 }
 
 setTimeout(() => {
-    let disposable = Disposable(() => false);
-    onUIChanges(disposable, () => {
+    onUIChanges(infiniteDisposable, () => {
         document.body.parentElement.classList.toggle("is-mobile", isMobileDevice())
     })
 

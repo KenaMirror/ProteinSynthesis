@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Protein Synthesis</title>
     <link rel="icon" type="image/svg+xml" href="resources/icon.svg">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
             integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
@@ -13,12 +16,14 @@
     <!--region bundles-->
     <bundle lang="en" href="resources/bundles/bundle.properties"></bundle>
     <bundle lang="ru" href="resources/bundles/bundle_ru.properties"></bundle>
+    <link rel="stylesheet" type="text/css" href="src/sizes_em.css">
     <script src="src/bundles/bundles.js"></script>
     <!--endregion-->
     <!--region common-->
     <script src="src/index-utils.js"></script>
     <script src="src/index-bio.js"></script>
     <script src="src/index-ui.js"></script>
+    <script src="src/index-ui2.js"></script>
     <link rel="stylesheet" type="text/css" href="src/index.css">
     <link rel="stylesheet" type="text/css" href="src/title.css">
     <link rel="stylesheet" type="text/css" href="src/custom/popup.css">

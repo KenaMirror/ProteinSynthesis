@@ -41,12 +41,12 @@ Tabs.transcription.registerSetup(() => {
                     this.index = newIndex
                     for (let j = 0; j < length + Math.floor(length / 3); j++) {
                         if ((j + 1) % 4 === 0) continue
-                        if (j !== newIndex || makeEnabled) dna2.children[j].children[0].dataset.pressed = "0"
-                        if (j !== newIndex - length || makeEnabled) rna.children[j].children[0].dataset.pressed = "0"
+                        if (j !== newIndex || makeEnabled) dna2.children[j].dataset.pressed = "0"
+                        if (j !== newIndex - length || makeEnabled) rna.children[j].dataset.pressed = "0"
                     }
                 }
                 if (makeEnabled && newIndex !== -1) {
-                    elementAt(newIndex).children[0].dataset.pressed = "1"
+                    elementAt(newIndex).dataset.pressed = "1"
                 }
             },
             setup(dnaNucleotides) {
@@ -64,17 +64,17 @@ Tabs.transcription.registerSetup(() => {
                     let myButton = create(
                         myField,
                         "dna-nucleotide-background",
-                        "div"
+                        "p"
                     )
                     // create(myField,"dna_line__main__field__text","p").innerText="?"
                     myButton.innerText = "?"
                     let myMarker = create(myField, "dna-nucleotide-background2", "p");
                     myMarker.disabled = true
                     myMarker.addEventListener("mouseover", () => {
-                        myButton.dataset.hover = "1"
+                        myField.dataset.hover = "1"
                     })
                     myMarker.addEventListener("mouseleave", () => {
-                        myButton.dataset.hover = "0"
+                        myField.dataset.hover = "0"
                     })
                     myMarker.addEventListener("click", () => {
                         self.select(myIndex, true)
@@ -95,7 +95,7 @@ Tabs.transcription.registerSetup(() => {
 
                     }
                 }
-                dna2.children[0].children[0].dataset.pressed = "1"
+                dna2.dataset.pressed = "1"
             }
         }
         self.onClicked = function (nucleotide) {
@@ -140,24 +140,24 @@ Tabs.transcription.registerSetup(() => {
                     }
                 }
                 if (errored.length === 0) {
-                    Tabs.announce(BUNDLE["right"], 120).style.color = "green"
+                    UI.informSuccess()
                     if (callback) callback(true)
                 } else {
                     for (let i = 0; i < errored.length; i++) {
-                        errored[i] = elementAt(errored[i]).children[1]
+                        errored[i] = elementAt(errored[i]).children[0]
                     }
                     if (prevAnimation !== undefined) {
                         prevAnimation.seek(prevAnimation.duration)
                     }
                     prevAnimation = anime({
                         targets: errored,
-                        backgroundColor: ['rgba(255,0,0,1)', 'rgba(255,0,0,0)'],
+                        backgroundColor: ['rgb(159,31,31)', 'rgba(159,31,31,0)'],
                         easing: 'linear',
                         complete(anim) {
                             prevAnimation = undefined
                         }
                     });
-                    Tabs.announce(BUNDLE["wrong"], 120).style.color = "red"
+                    UI.informError()
                     if (callback) callback(false)
                 }
             }
@@ -170,7 +170,19 @@ Tabs.transcription.registerSetup(() => {
                 myEndListeners[i]()
             }
         }
-
+        /**@type HTMLButtonElement*/
+        let endButton;
+        /**@type HTMLButtonElement*/
+        let checkButton
+        UI.addEventListener(document.body,"keydown",(event)=>{
+            if (event.code !== "Enter") return
+            event.preventDefault()
+            if(endButton===undefined || endButton.disabled){
+                checkButton.click()
+            }else{
+                endButton.click()
+            }
+        });
         (function () {
             let buttonsElement = createDiv(dnaLineElement, "dna-line__buttons");
             let nucleoButtons = createDiv(buttonsElement, "dna-line__buttons__nucleo");
@@ -189,11 +201,11 @@ Tabs.transcription.registerSetup(() => {
             leftButton.addEventListener("click", self.moveLeft)
             let rightButton = create(moveButtons, "dna-line__gray__button", "button");
             rightButton.innerText = ">>"
-            rightButton.addEventListener("click", self.moveRight)
-            let checkButton = create(moveButtons, "dna-line__gray__button", "button");
+            rightButton.addEventListener("click", self.moveRight);
+            checkButton = create(moveButtons, "dna-line__gray__button", "button");
             checkButton.innerText = BUNDLE["check"]
 
-            let endButton = create(moveButtons, "dna-line__gray__button", "button");
+            endButton = create(moveButtons, "dna-line__gray__button", "button");
             endButton.innerText = BUNDLE["next-line"]
             endButton.disabled = true
             endButton.addEventListener("click", () => {

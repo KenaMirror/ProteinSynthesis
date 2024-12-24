@@ -1,7 +1,7 @@
 
 :root {
     --font-size: 20px;
-    --background-color: #9cb295;
+    --background-color: #c1d4c0;
 
     --accent: #ffd37f;
 
@@ -16,16 +16,26 @@
     --guanine-main-color: #67da65;
     --guanine-sub-color: #4a9c48;
 }
-
+body {
+    background-color: var(--background-color) ;
+    margin: 0;
+}
+body{
+    transition: background-color 500ms ease-in-out;
+}
+.errored-background{
+    background: #c29d9d !important;
+    transition: none;
+}
+.good-background{
+    background: #a5c29d !important;
+    transition: none;
+}
 
 * {
     font-size: var(--font-size);
 }
 
-body {
-    background-color: var(--background-color);
-    margin: 0;
-}
 
 .element__container {
     overflow: hidden;

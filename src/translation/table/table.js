@@ -135,7 +135,7 @@ Tabs.translation.registerSetup(() => {
 
         function addName(div, nucleo) {
             createDiv(div, "nucleotide-name").innerText = nucleo.name.charAt(0);
-            div.addEventListener("click", updateBackground)
+            UI.addEventListener(div,"click", updateBackground)
         }
 
 

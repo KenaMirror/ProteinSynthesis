@@ -27,7 +27,7 @@ Tabs.transcription.registerSetup(()=>{
             nameToNucleo[nucleo.charName.toLowerCase()]= nucleo
             nameToNucleo[i+1]= nucleo
         }
-        MAIN_WINDOW.addEventListener("keydown", event=>{
+        UI.addEventListener(MAIN_WINDOW,"keydown", event=>{
             let s = event.key.toLowerCase();
             let found = nameToNucleo[s];
             if(found){

@@ -1,51 +1,50 @@
 const SETTINGS = (function () {
 
-    function Settings() {
-        return {
-            fontSize: SettingKey(20, newvalue => {
-                let style = document.documentElement.style;
+    class Settings {
+        fontSize = settingKey(20, newvalue => {
+            let style = document.documentElement.style;
 
-                if (newvalue == null) {
-                    style["--font-size"] = ""
-                } else {
-                    let number = Number.parseFloat(newvalue);
-                    if (number <= 5) number = 5;
-                    if (number >= 100) number = 100;
-                    style["--font-size"] = number + "px"
-                }
-                style.cssText = CssParser.stringify(style)
-            }),
-            uiscale: SettingKey(1, newvalue => {
-                let style = document.documentElement.style;
+            if (newvalue == null) {
+                style["--font-size"] = ""
+            } else {
+                let number = Number.parseFloat(newvalue);
+                if (number <= 5) number = 5;
+                if (number >= 100) number = 100;
+                style["--font-size"] = number + "px"
+            }
+            style.cssText = CssParser.stringify(style)
+        })
+        uiscale = settingKey(1, newvalue => {
+            let style = document.documentElement.style;
 
-                if (newvalue == null) {
-                    style["--uiscale"] = ""
-                } else {
-                    let number = Number.parseFloat(newvalue);
-                    if (number <= 0.1) number = 0.1;
-                    if (number >= 5) number = 5;
-                    style["--uiscale"] = number
-                }
-                style.cssText = CssParser.stringify(style)
-            }),
-            nucleopointsAmountTranslation: SettingKey(10),
-            coloredNucleoTriplet: SettingKey(true),
-            coloredNucleoTable: SettingKey(true),
-            coloredNucleoTableCross: SettingKey(true),
-            nucleoTableSelectionEnabled: SettingKey(true),
-            coloredNucleoLine: SettingKey(true),
-            backgroundColor: SettingKey("#9cb295", newcolor => {
-                setTimeout(() => {
-                    let style = document.body.style;
-                    style.backgroundColor = newcolor
-                })
+            if (newvalue == null) {
+                style["--uiscale"] = ""
+            } else {
+                let number = Number.parseFloat(newvalue);
+                if (number <= 0.1) number = 0.1;
+                if (number >= 5) number = 5;
+                style["--uiscale"] = number
+            }
+            style.cssText = CssParser.stringify(style)
+        })
+        nucleopointsAmountTranslation = settingKey(10)
+        coloredNucleoTriplet = settingKey(true)
+        coloredNucleoTable = settingKey(true)
+        coloredNucleoTableCross = settingKey(true)
+        nucleoTableSelectionEnabled = settingKey(true)
+        useConstantUIOnBigWidth = settingKey(false)
+        coloredNucleoLine = settingKey(true)
+        backgroundColor = settingKey("#9cb295", newcolor => {
+            setTimeout(() => {
+                let style = document.body.style;
+                style.backgroundColor = newcolor
             })
-
-        }
+        })
     }
 
+
     //region other
-    let settings = Settings()
+    let settings = new Settings()
 
 
     /**@return string*/
@@ -60,10 +59,38 @@ const SETTINGS = (function () {
     }
 
     /**
+     * Represents a setting with a name, default value, and optional listener.
+     * @interface Setting
+     */
+    class SettingKey {  // Using a class for JSDoc to work correctly with methods
+
+        /**
+         * @type {string}
+         */
+        name;
+
+        get() {
+        }
+
+        set(value) {
+        }
+
+        reset() {
+        }
+
+        check() {
+        }
+
+        /**@param listener {(newValue:any)=>void}*/
+        addListener(listener) {
+        }
+    }
+
+    /**
      * @param def {*}
      * @param listener {(any)=>void}
      * @type SettingKey*/
-    function SettingKey(def, listener = undefined) {
+    function settingKey(def, listener = undefined) {
         return {
             name: null,
             def() {
@@ -74,7 +101,7 @@ const SETTINGS = (function () {
             },
             check() {
                 let setting = this.get();
-                if (listener && setting !== def) {
+                if (listener && setting !== this.def()) {
                     listener(setting)
                 }
             },
@@ -95,9 +122,20 @@ const SETTINGS = (function () {
                 }
             },
             set(value) {
-                setSetting(this.name,JSON.stringify( {value: value}))
+                setSetting(this.name, JSON.stringify({value: value}))
                 if (listener) {
                     listener(value)
+                }
+            },
+            addListener(listener1) {
+                if (listener === undefined) {
+                    listener = listener1;
+                } else {
+                    let listener0 = listener;
+                    listener = () => {
+                        listener0()
+                        listener1()
+                    }
                 }
             }
         }
@@ -110,31 +148,63 @@ const SETTINGS = (function () {
             settings[names[i]].check()
         }
     }
-
-    return new Proxy(settings, {
-        get(target, p, receiver) {
-            if (p === '__target__') return target
-            let newVar = target[p].get();
-            return newVar === undefined || newVar == null ? target[p].def() : newVar;
+    // noinspection UnnecessaryLocalVariableJS
+    /**@type {{[K in keyof Settings]: any} & { __target__:Settings}}*/
+    let proxy = new Proxy({}, {
+        get(target__, p, receiver) {
+            if (p === '__target__') return settings
+            let newVar = settings[p].get();
+            return newVar === undefined || newVar == null ? settings[p].def() : newVar;
         },
-        set(target, p, newValue, receiver) {
-            target[p].set(newValue)
+        set(target__, p, newValue, receiver) {
+            settings[p].set(newValue)
         }
-    })
+    });
+    return proxy
     //endregion
 })()
 
 Tabs.settings.registerSetup(() => {
     let container = createContainer();
-    container.appendChild(createElement("div", ["class", "settings_table"], it => {
-        function addSetting(consumer) {
-            it.appendChild(createElement("div", ["class", "setting_container"], consumer))
-        }
+    container.appendChild(createElement("div", ["class", "settings_window"], settingWindow => {
+        /**@type HTMLDivElement*/
+        let currentSettingTab;
 
         let settings = SETTINGS["__target__"];
 
-        rangeSetting("setting.font-size.name", settings.fontSize, 1, [5, 100]);
-        rangeSetting("setting.nucleopoints-amount-translation.name", settings.nucleopointsAmountTranslation, 1, [2, 124]);
+        /**
+         * @param name {string}
+         * @param constructor {(this:HTMLDivElement)=>void}
+         * */
+        function settingTab(name, constructor) {
+            create(settingWindow, "setting_tab", "div", tab => {
+                create(tab, "setting_tab__name", "div").innerText = BUNDLE["setting.tabs." + name]
+                let thisArg = create(tab, "settings_table", "div");
+                currentSettingTab = thisArg;
+                constructor.apply(thisArg);
+                currentSettingTab = null;
+            })
+
+        }
+
+        settingTab("other", () => {
+            rangeSetting("setting.font-size.name", settings.fontSize, 1, [5, 100]);
+            checkSetting("setting.constant-ui.name", settings.useConstantUIOnBigWidth)
+        })
+        settingTab("table", () => {
+            checkSetting("setting.nucleo-table-selection.name", settings.nucleoTableSelectionEnabled);
+            rangeSetting("setting.nucleopoints-amount-translation.name", settings.nucleopointsAmountTranslation, 1, [2, 124]);
+        })
+
+        //TODO implement settings
+        // checkSetting("setting.colored-nucleo-triplet.name",settings.coloredNucleoTriplet)
+        // checkSetting("setting.colored-nucleo-table.name",settings.coloredNucleoTable)
+        // checkSetting("setting.colored-nucleo-table-cross.name",settings.coloredNucleoTableCross)
+        // checkSetting("setting.colored-dna-transcription-buttons.name",settings.coloredNucleoLine)
+        /**@param consumer {(currentSettingTab:HTMLDivElement)=>void}*/
+        function addSetting(consumer) {
+            currentSettingTab.appendChild(createElement("div", ["class", "setting_container"], consumer))
+        }
 
         // rangeSetting("setting.ui-scale.name", settings.uiscale, .05);
         function rangeSetting(key, setting_, scale, ranges) {
@@ -161,7 +231,7 @@ Tabs.settings.registerSetup(() => {
             }
             addSetting(it => {
                 let setting = setting_;
-                let label = createElement("p", ["style", "margin-right: auto"], ["class", "setting_name"]);
+                let label = createElement("p", ["class", "setting_name"]);
 
                 function updateLabel() {
                     label.innerText = BUNDLE[key] + ": " + getFloat().toFixed(Math.max(-Math.floor(Math.log10(scale)), 0))
@@ -170,7 +240,7 @@ Tabs.settings.registerSetup(() => {
                 it.appendChild(label)
                 updateLabel()
 
-                let buttonSize = "width: 48px; height: 48px;margin-top: auto;margin-bottom: auto;text-align: center";
+                // let buttonSize = "width: 48px; height: 48px;margin-top: auto;margin-bottom: auto;text-align: center";
 
                 function getFloat() {
                     let newVar = setting.get();
@@ -181,20 +251,22 @@ Tabs.settings.registerSetup(() => {
                     return float;
                 }
 
-                it.appendChild(createElement("button", ["class", "frame_button"], ["style", buttonSize + "; margin-left: 10px"], it => {
-                    it.innerText = "-"
-                    it.onclick = () => {
-                        setting.set(ranges[0](getFloat() - scale))
-                        updateLabel()
-                    }
-                }))
-                it.appendChild(createElement("button", ["class", "frame_button"], ["style", buttonSize], it => {
-                    it.innerText = "+"
-                    it.onclick = () => {
-                        setting.set(ranges[1](getFloat() + scale))
-                        updateLabel()
-                    }
-                }))
+                create(it, "settings_buttons_group", "div", it => {
+                    it.appendChild(createElement("button", ["class", "frame_button"], it => {
+                        it.innerText = "-"
+                        it.onclick = () => {
+                            setting.set(ranges[0](getFloat() - scale))
+                            updateLabel()
+                        }
+                    }))
+                    it.appendChild(createElement("button", ["class", "frame_button"], it => {
+                        it.innerText = "+"
+                        it.onclick = () => {
+                            setting.set(ranges[1](getFloat() + scale))
+                            updateLabel()
+                        }
+                    }))
+                })
             })
         }
 
@@ -208,18 +280,25 @@ Tabs.settings.registerSetup(() => {
                 it.appendChild(label)
                 label.innerText = BUNDLE[key] + ": "
 
-                let buttonSize = "width: 48px; height: 48px;align-self: center";
-                it.appendChild(createElement("button", ["class", "frame_checkbox"], ["style", buttonSize], it => {
-                    it.innerText = "X"
-                    let startB = setting.get() === "true";
-                    it.dataset.pressed = startB ? "1" : "0"
-                    it.onclick = () => {
-                        let b = setting.get() !== "true";
-                        setting.set(b)
-                        it.dataset.pressed = b ? "0" : "1"
-                    }
-                }))
+                create(it, "settings_buttons_group", "div", it => {
+                    it.appendChild(createElement("button", ["class", "frame_checkbox"], it => {
+                        function update(isChecked) {
+                            setTimeout(() => {
+                                it.dataset.pressed = isChecked ? "1" : "0"
+                            })
+                        }
+
+                        update(setting.get())
+
+                        it.onclick = () => {
+                            let b = !setting.get();
+                            setting.set(b)
+                            update(b)
+                        }
+                    }))
+                });
             });
         }
+
     }))
 })

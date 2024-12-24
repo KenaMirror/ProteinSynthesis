@@ -47,12 +47,15 @@
     font-size: 20px;
 }
 
-.amino-acid__container:nth-child(even) {
+.amino-acid__container:nth-child(odd) {
     margin-top: 65px;
 }
 
 @media (max-aspect-ratio: 1/1) {
     .amino-acid__container:nth-child(even) {
+        margin-top: unset;
+    }
+    .amino-acid__container:nth-child(odd) {
         margin-top: unset;
     }
 

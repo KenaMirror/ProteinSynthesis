@@ -51,13 +51,16 @@
     flex: 1;
 }
 .dna-line__main__field {
-    min-width: 16px;
+    /*min-width: 16px;*/
+    width: 0.8em;
+    height: 1.25em;
     display: flex;
     justify-content: center;
     align-items: center;
     /*display: ;*/
     /*grid-template-rows: 100%;*/
     text-align: center;
+    position: relative;
 }
 
 .dna-nucleotide-background2 {
@@ -85,14 +88,22 @@
     /*background-color: #eee;*/
 }
 
+.dna-line__main__field:before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 /* On mouse-over, add a grey background color */
-.dna-nucleotide-background:hover, .dna-nucleotide-background[data-hover="1"] {
+.dna-line__main__field[data-hover="1"]:before {
     background-color: #ccc;
 }
-
-/* When the radio button is checked, add a blue background */
-.dna-nucleotide-background[data-pressed="1"] {
+.dna-line__main__field[data-pressed="1"]:before{
     background-color: #FFD37F;
+}
+.dna-nucleotide-background{
+    position: absolute;
+    /*z-index: 1;*/
 }
 
 .dna-line__main__dna1, .dna-line__main__dna2, .dna-line__main__rna {

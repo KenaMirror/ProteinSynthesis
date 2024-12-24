@@ -20,6 +20,35 @@
             it.innerText = BUNDLE["title-text"]
         }))
     }))
+
+    setTimeout(()=>{
+        let expectedWidth = 1920;
+        onUIChanges(infiniteDisposable, updateSpecialScale)
+
+        function updateSpecialScale() {
+            let vw = window.visualViewport.width;
+            let vh = window.visualViewport.height;
+
+            let htmlTagStyle = document.body.parentElement.style;
+            if (vw > expectedWidth && SETTINGS.useConstantUIOnBigWidth) {
+                let scale = vw / expectedWidth;
+                window.visualViewport.scale
+                htmlTagStyle.overflow = "hidden"
+                htmlTagStyle.transform = `scale(${scale})`
+                htmlTagStyle.transformOrigin = 'top left';
+                htmlTagStyle.width = `${window.innerWidth / scale}px`
+                htmlTagStyle.height = `${vh / scale}px`
+            } else {
+                htmlTagStyle.transform = ""
+                htmlTagStyle.width = ``
+            }
+        }
+        SETTINGS.__target__.useConstantUIOnBigWidth.addListener(newValue => {
+            setTimeout(updateSpecialScale)
+        })
+    })
+
+
 })()
 
 function gotoTab(tab) {
@@ -44,10 +73,9 @@ function clearDocument() {
     })
 }
 
-const urlParams = new URLSearchParams(window.location.search);
 const startTab = urlParams.get('tab');
-if (Tabs[startTab] !== undefined) {
-    if (Tabs[startTab].setup !== undefined) {
-        gotoTab(Tabs[startTab])
-    }
+if (Tabs[startTab] !== undefined && Tabs[startTab].setup !== undefined) {
+    gotoTab(Tabs[startTab])
+} else {
+    gotoTab(Tabs.transcription)
 }
