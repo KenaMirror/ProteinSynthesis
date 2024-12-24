@@ -3,7 +3,7 @@ Tabs.transcription.registerSetup(()=>{
 
         function generateNext(){
             let list = []
-            let TIRPLET_AMOUNT = Math.floor(window.innerWidth/2/16/4);
+            let TIRPLET_AMOUNT = Math.floor(document.body.clientWidth/2/16/4);
             for (let i = 0; i < TIRPLET_AMOUNT * 3; i++) {
                 list.push(Mathf.randomElement(BIO.Nucleotide.dna))
             }
