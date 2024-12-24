@@ -1,5 +1,5 @@
 
-
+/**@type {{[key: string]: string;}}*/
 const BUNDLE=(function (){
     let script = document.getElementsByTagName('bundle');
     let loadedBundles = {};
@@ -68,7 +68,7 @@ function load(url) {
         xhr.overrideMimeType('text/plain');
     }
     xhr.send(null);
-    if(xhr.status == 200) {
+    if(xhr.status === 200) {
         return xhr.responseText;
     }
     return false;
