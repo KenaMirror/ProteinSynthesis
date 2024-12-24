@@ -1,6 +1,6 @@
 const PropertiesParser = {
     parse(str) {
-        let lines = str.split("\n");
+        let lines = str.split(/\r?\n/);
         let obj = {}
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i].trimStart();
