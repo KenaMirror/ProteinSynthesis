@@ -30,7 +30,7 @@
             let vh = window.visualViewport.height;
 
             let htmlTagStyle = document.body.parentElement.style;
-            if (vw > expectedWidth && SETTINGS.useConstantUIOnBigWidth) {
+            if (vw !== expectedWidth && SETTINGS.useConstantUIOnBigWidth) {
                 let scale = vw / expectedWidth;
                 window.visualViewport.scale
                 htmlTagStyle.overflow = "hidden"
